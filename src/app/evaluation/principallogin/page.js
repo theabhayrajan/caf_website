@@ -49,7 +49,7 @@ export default function OTPLoginStatic() {
         e.preventDefault();
         if (!validateForm()) return;
 
-        toast.success("✅ OTP Verified Successfully!");
+        toast.success("OTP Verified Successfully!");
 
         // Redirect after short delay
         setTimeout(() => {

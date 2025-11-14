@@ -27,7 +27,7 @@ export default function OTPLoginStatic() {
         e.preventDefault();
         if (!validateForm()) return;
 
-        toast.success("✅ Details submitted successfully!");
+        toast.success("Details submitted successfully!");
 
         setTimeout(() => {
             router.push("/"); // redirect after success
