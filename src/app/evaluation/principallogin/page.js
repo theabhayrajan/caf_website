@@ -101,7 +101,7 @@ export default function OTPLoginStatic() {
                                         type="button"
                                         onClick={() => {
                                             if (phone.length === 10) {
-                                                toast.success("📲 OTP sent to your phone number!");
+                                                toast.success("OTP sent to your phone number!");
                                             } else {
                                                 setErrors({ phone: "Enter a valid 10-digit number first." });
                                             }
