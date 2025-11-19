@@ -60,7 +60,7 @@ export default function OTPLoginStatic() {
     return (
         <div className="min-h-screen flex flex-col lg:overflow-hidden">
             <Header />
-            <div className="flex-1 flex items-center justify-center px-4 overflow-y-auto lg:overflow-hidden">
+            <div className="flex-1 flex items-start lg:mt-20 justify-center px-4 overflow-y-auto lg:overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
                     {/* Image for small screens */}
                     <div className="flex lg:hidden items-center justify-center mt-5">
@@ -168,7 +168,7 @@ export default function OTPLoginStatic() {
                     </div>
 
                     {/* Right Section - Image */}
-                    <div className="hidden lg:flex items-center justify-center">
+                    <div className="hidden lg:flex lg:self-end lg:translate-y-25 items-center justify-center">
                         <Image
                             src="/kidsotp.png"
                             alt="Illustration"
