@@ -65,7 +65,7 @@ export default function CafAssessments() {
   ];
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:mx-2 xl:mx-auto py-10">
       {/* Heading */}
       <h2 className="text-[1.4rem] sm:text-[1.6rem] md:text-[1.7rem] lg:text-[1.75rem] xl:text-[1.8rem] font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-9 text-center lg:text-left">
         How the CAF’s assessments would help the students
@@ -95,7 +95,7 @@ export default function CafAssessments() {
 
             {/* Text Content */}
             <div className="text-left flex-1">
-              <h3 className="text-gray-900 font-semibold text-[1.15rem] sm:text-[1.4rem] md:text-[1.4rem] lg:text-[1.5rem]">
+              <h3 className="text-gray-900 font-semibold text-[1.15rem] sm:text-[1.4rem] md:text-[1.4rem] lg:text-[1.45rem]">
                 {item.title}
               </h3>
               <div className={`h-0.5 [@media(min-width:425px)_and_(max-width:429px)]:w-90 sm:w-130 md:w-130 lg:w-155 mb-3 mt-1 mx-auto sm:mx-0 ${linecolor[index]}`}></div>

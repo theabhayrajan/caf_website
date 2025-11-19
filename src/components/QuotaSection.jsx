@@ -20,7 +20,7 @@ export default function QuoteSection() {
       {/* Right Side - Text */}
       <div className="w-full  flex flex-col justify-center gap-8 sm:gap-10 md:gap-10 lg:gap-14 lg:pl-20 text-md sm:text-lg md:text-lg lg:text-xl xl:text-2xl">
         {/* Quote Text */}
-        <p className="text-gray-700 lg:w-[90%] 2xl:w-[70%] w-full  leading-tight mb-2 md:mb-4 text-center md:text-left">
+        <p className="text-gray-700 self-center lg:self-start md:w-[75%] lg:w-[90%] 2xl:w-[70%] w-full  leading-tight mb-2 md:mb-4 text-center md:text-left ">
           The world of the child is not defined by the walls of the home, nor
           even of the classroom, but extends outward to encompass the larger
           society—the community, the culture, the economic system, and the
@@ -28,11 +28,11 @@ export default function QuoteSection() {
         </p>
 
         {/* Author Info */}
-        <div className="text-center md:text-left md:self-end md:mr-20 w-full md:w-[70%]">
+        <div className="text-center md:text-left md:self-end lg:mr-20 w-full md:w-[70%]">
           <p className="text-gray-900 font-semibold">
             - Urie Bronfenbrenner (1917–2005)
           </p>
-          <p className="text-gray-600 ">
+          <p className="text-gray-600 sm:whitespace-nowrap">
             Developmental Psychologist, Researcher, and Professor
             <br />
             (Cornell University)

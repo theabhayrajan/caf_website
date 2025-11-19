@@ -35,7 +35,7 @@ export default function FAQAccordion() {
   };
 
   return (
-    <section className="w-full min-h-screen bg-white text-black py-10">
+    <section className="w-full min-h-screen bg-white text-black py-10 xl:mx-3 2xl:mx-auto">
       <div className="max-w-7xl mx-auto px-4  ">
         
         {/* ✅ Centered and styled heading */}
