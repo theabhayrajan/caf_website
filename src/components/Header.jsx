@@ -177,7 +177,7 @@ export default function Header() {
 
               <div className="flex flex-col gap-3">
                 <Link
-                  href="/login"
+                  href="/memberlogin"
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2 rounded text-[#2E98DA] font-semibold hover:bg-gray-50"
                 >

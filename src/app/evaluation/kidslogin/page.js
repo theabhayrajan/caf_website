@@ -78,7 +78,7 @@ export default function OTPLoginStatic() {
     };
 
     return (
-        <div className="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden">
+        <div className="min-h-screen flex flex-col lg:overflow-hidden">
             <Header />
             <div className="flex-1 flex items-center justify-center px-4 overflow-y-auto lg:overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
@@ -91,7 +91,7 @@ export default function OTPLoginStatic() {
                     </div>
 
                     {/* Left Section */}
-                    <div className="flex flex-col justify-center lg:self-start lg:-translate-y-20 px-8 md:px-20 w-full sm:w-150 ml-5 mt-5 md:mt-10 lg:mt-0 lg:ml-0 xl:ml-10">
+                    <div className="flex flex-col justify-center lg:self-start px-8 md:px-20 w-full sm:w-150 ml-5 mt-5 md:mt-10 lg:mt-0 lg:ml-0 xl:ml-10">
                         <h1 className="text-lg md:text-xl font-semibold mb-10 lg:mb-14 text-black">
                             Login through OTP
                         </h1>
