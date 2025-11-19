@@ -67,12 +67,12 @@ export default function CafAssessments() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Heading */}
-      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-9 text-center lg:text-left">
+      <h2 className="text-[1.4rem] sm:text-[1.6rem] md:text-[1.7rem] lg:text-[1.75rem] xl:text-[1.8rem] font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-9 text-center lg:text-left">
         How the CAF’s assessments would help the students
       </h2>
 
       {/* Intro Paragraph */}
-      <p className="text-gray-700 text-sm px-5 sm:text-base lg:text-[1.15rem] leading-relaxed mb-10 text-center lg:text-left lg:ml-5">
+      <p className="text-gray-700 text-[1.1rem] px-4 sm:text-[1.25rem] lg:text-[1.25rem] xl:text-[1.35rem] leading-relaxed mb-10 text-center lg:text-left lg:ml-5">
         Our assessments are thoughtfully designed to support the holistic development of school children by focusing
         on their psychological, social, and environmental conduct. These evaluations provide valuable insights into a
         child’s emotional well-being, interpersonal skills, and awareness of their surroundings, empowering them to grow
@@ -88,18 +88,18 @@ export default function CafAssessments() {
           >
             {/* Number Badge */}
             <div
-              className={`flex items-center justify-center w-7 h-7 sm:w-9 sm:h-9 lg:h-12 lg:w-12 lg:text-xl rounded-md font-semibold ${colors[index]} mb-3 sm:mb-0 flex-shrink-0 mx-auto sm:mx-0`}
+              className={`flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 lg:h-12 lg:w-12 sm:text-lg lg:text-xl rounded-md font-semibold ${colors[index]} mb-3 sm:mb-0 flex-shrink-0 mx-auto sm:mx-0`}
             >
               {item.id}
             </div>
 
             {/* Text Content */}
             <div className="text-left flex-1">
-              <h3 className="text-gray-900 font-semibold text-sm sm:text-[1rem] md:text-lg lg:text-[1.5rem]">
+              <h3 className="text-gray-900 font-semibold text-[1.15rem] sm:text-[1.4rem] md:text-[1.4rem] lg:text-[1.5rem]">
                 {item.title}
               </h3>
-              <div className={`h-0.5 [@media(min-width:425px)_and_(max-width:429px)]:w-90 sm:w-116 md:w-130 lg:w-155 mb-3 mt-1 mx-auto sm:mx-0 ${linecolor[index]}`}></div>
-              <p className="text-gray-600 text-xs sm:text-sm md:text-[15px] lg:text-[1.15rem] leading-relaxed">
+              <div className={`h-0.5 [@media(min-width:425px)_and_(max-width:429px)]:w-90 sm:w-130 md:w-130 lg:w-155 mb-3 mt-1 mx-auto sm:mx-0 ${linecolor[index]}`}></div>
+              <p className="text-gray-600 text-[1.05rem] sm:text-[1.2rem] md:text-[1.2rem] lg:text-[1.25rem] xl:text-[1.35rem] leading-relaxed">
                 {item.desc}
               </p>
             </div>

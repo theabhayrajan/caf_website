@@ -39,7 +39,7 @@ export default function FAQAccordion() {
       <div className="max-w-7xl mx-auto px-4  ">
         
         {/* ✅ Centered and styled heading */}
-        <h2 className="text-2xl lg:text-4xl font-semibold mb-12  text-gray-900 text-center xl:text-left">
+        <h2 className="text-2xl md:text-[1.8rem] lg:text-4xl font-semibold mb-12  text-gray-900 text-center xl:text-left">
           FAQ - Frequently Asked Questions
         </h2>
 

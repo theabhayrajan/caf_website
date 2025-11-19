@@ -11,6 +11,7 @@ export default function OTPLoginStatic() {
     const [grade, setGrade] = useState("");
     const [accreditation, setAccreditation] = useState("");
     const [testCode, setTestCode] = useState("");
+    const [agreeToMembership, setAgreeToMembership] = useState(false);
     const [errors, setErrors] = useState({});
 
     // Prevent body scroll only on large screens (lg breakpoint = 1024px)
@@ -37,10 +38,11 @@ export default function OTPLoginStatic() {
 
     const validateForm = () => {
         const formErrors = {};
-        if (!name.trim()) formErrors.name = "Full name is required.";
-        if (!grade) formErrors.grade = "Please select your class.";
-        if (!accreditation) formErrors.accreditation = "Please select accreditation.";
+        if (!name.trim()) formErrors.name = "Principal name is required.";
+        if (!grade.trim()) formErrors.grade = "City is required.";
+        if (!accreditation.trim()) formErrors.accreditation = "Pin code is required.";
         if (!testCode.trim()) formErrors.testCode = "Test code is required.";
+        if (!agreeToMembership) formErrors.agree = "You must agree to become a member of CAF.";
         setErrors(formErrors);
         return Object.keys(formErrors).length === 0;
     };
@@ -64,7 +66,7 @@ export default function OTPLoginStatic() {
                     {/* Image for small screens */}
                     <div className="flex lg:hidden items-center justify-center mt-5">
                         <img
-                            src="/kidsotp.png"
+                            src="/principallogin.png"
                             alt="Illustration"
                             className="max-h-[300px] sm:max-h-[320px] md:max-h-[350px] w-90 object-contain"
                         />
@@ -72,15 +74,15 @@ export default function OTPLoginStatic() {
 
                     {/* Left Section */}
                     <div className="flex flex-col justify-center lg:self-start lg:-translate-y-20 px-8 md:px-20 w-full sm:w-150 ml-5 mt-5 md:mt-10 lg:mt-0 lg:ml-0 xl:ml-10">
-                        <h1 className="text-lg md:text-xl font-semibold mb-10 lg:mb-14 text-black xl:-translate-x-22">
-                            Enter your details
+                        <h1 className="text-lg md:text-xl font-semibold mb-10 lg:mb-7 text-black lg:whitespace-nowrap">
+                            If you are using it for the first time, Enter the below details
                         </h1>
 
                         <form onSubmit={handleSubmit}>
-                            {/* Full Name */}
+                            {/* Principal Name */}
                             <div className="flex flex-col gap-2 mb-10">
                                 <label className="block text-[1.05rem] font-medium text-black">
-                                    Full Name
+                                    Name of the principal
                                 </label>
                                 <input
                                     type="text"
@@ -90,50 +92,6 @@ export default function OTPLoginStatic() {
                                         } p-3 py-4 bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400`}
                                 />
                                 {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
-                            </div>
-
-                            {/* Class + Accreditation */}
-                            <div className="flex flex-col md:flex-row gap-8 mb-10">
-                                <div>
-                                    <label className="block text-[1.05rem] font-medium text-black">
-                                        Class (Grade)
-                                    </label>
-                                    <select
-                                        value={grade}
-                                        onChange={(e) => setGrade(e.target.value)}
-                                        className={`w-[100%] md:w-[200px] border ${errors.grade ? "border-red-500" : "border-gray-300"
-                                            } p-3 py-4 bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400`}
-                                    >
-                                        <option value="">Select</option>
-                                        <option value="8th">8th</option>
-                                        <option value="9th">9th</option>
-                                        <option value="10th">10th</option>
-                                        <option value="11th">11th</option>
-                                        <option value="12th">12th</option>
-                                    </select>
-                                    {errors.grade && <p className="text-xs text-red-500">{errors.grade}</p>}
-                                </div>
-
-                                <div>
-                                    <label className="block text-[1.05rem] font-medium text-black">
-                                        Accreditation
-                                    </label>
-                                    <select
-                                        value={accreditation}
-                                        onChange={(e) => setAccreditation(e.target.value)}
-                                        className={`w-[100%] md:w-[200px] border ${errors.accreditation ? "border-red-500" : "border-gray-300"
-                                            } px-5 py-4 bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400`}
-                                    >
-                                        <option value="">Select</option>
-                                        <option value="ICSE">ICSE</option>
-                                        <option value="CBSE">CBSE</option>
-                                        <option value="IB">IB</option>
-                                        <option value="State Board">State Board</option>
-                                    </select>
-                                    {errors.accreditation && (
-                                        <p className="text-xs text-red-500">{errors.accreditation}</p>
-                                    )}
-                                </div>
                             </div>
 
                             {/* Test Code */}
@@ -153,6 +111,57 @@ export default function OTPLoginStatic() {
                                 )}
                             </div>
 
+                            {/* City + Pin code */}
+                            <div className="flex flex-col md:flex-row gap-8 md:gap-0 mb-10 lg:w-[350px]">
+                                <div className="flex-1">
+                                    <label className="block text-[1.05rem] font-medium text-black">
+                                        City
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={grade}
+                                        onChange={(e) => setGrade(e.target.value)}
+                                        className={`w-[100%] md:w-[275px] lg:w-[220px] border ${errors.grade ? "border-red-500" : "border-gray-300"
+                                            } p-3 py-4 bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400`}
+                                    />
+                                    {errors.grade && <p className="text-xs text-red-500">{errors.grade}</p>}
+                                </div>
+
+                                <div>
+                                    <label className="block text-[1.05rem] font-medium text-black">
+                                        Pin code
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={accreditation}
+                                        onChange={(e) => setAccreditation(e.target.value)}
+                                        className={`w-[100%] md:w-[150px] lg:w-[120px] border ${errors.accreditation ? "border-red-500" : "border-gray-300"
+                                            } px-5 py-4 bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400`}
+                                    />
+                                    {errors.accreditation && (
+                                        <p className="text-xs text-red-500">{errors.accreditation}</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Membership Checkbox */}
+                            <div className="flex flex-col gap-2 mb-7">
+                                <div className="flex gap-5 items-start">
+                                    <input
+                                        type="checkbox"
+                                        name="agree"
+                                        id="agree"
+                                        checked={agreeToMembership}
+                                        onChange={(e) => setAgreeToMembership(e.target.checked)}
+                                        className="w-6 h-6 mt-1"
+                                    />
+                                    <label htmlFor="agree" className="text-lg">
+                                        I will be a member of CAF.
+                                    </label>
+                                </div>
+                                {errors.agree && <p className="text-xs text-red-500 ml-11">{errors.agree}</p>}
+                            </div>
+
                             {/* Submit Button */}
                             <button
                                 type="submit"
@@ -166,9 +175,9 @@ export default function OTPLoginStatic() {
                     {/* Right Section - Image */}
                     <div className="hidden lg:flex items-center justify-center">
                         <img
-                            src="/kidsotp.png"
+                            src="/principallogin.png"
                             alt="Illustration"
-                            className="max-h-[420px] 2xl:max-h-[500px] w-90 object-contain"
+                            className="max-h-[420px] 2xl:max-h-[500px] w-135 object-contain"
                         />
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import Header from "../../../components/Header";
 import { FaArrowRight } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -73,12 +74,17 @@ export default function OTPLoginStatic() {
         toast.success("OTP Verified Successfully!");
 
         setTimeout(() => {
-            router.push("/evaluation/principaldetails");
+            router.push("/memberlogin/psychologistsdetails");
         }, 1500);
     };
 
+    const handleGoogleLogin = () => {
+        toast.success("Google login clicked!");
+        // Add your Google login logic here
+    };
+
     return (
-        <div className="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden">
+        <div className="min-h-screen flex flex-col lg:overflow-hidden">
             <Header />
             <div className="flex-1 flex items-center justify-center px-4 overflow-y-auto lg:overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
@@ -91,19 +97,19 @@ export default function OTPLoginStatic() {
                     </div>
 
                     {/* Left Section */}
-                    <div className="flex flex-col justify-center lg:self-start lg:-translate-y-20 px-8 md:px-20 w-full sm:w-150 ml-5 mt-5 md:mt-10 lg:mt-0 lg:ml-0 xl:ml-10">
-                        <h1 className="text-lg md:text-2xl font-semibold mb-10 text-black">
-                            Principals, School Management
+                    <div className="flex flex-col justify-center px-8 md:px-20 w-full sm:w-150 ml-5 mt-5 md:mt-10 lg:mt-0 lg:ml-0 xl:ml-10">
+                        <h1 className="text-lg md:text-xl lg:text-2xl font-semibold mb-6 lg:mb-8 text-black">
+                            For Educationists, child psychologists
                         </h1>
 
-                        <h1 className="text-lg md:text-xl font-semibold mb-10 lg:mb-14 text-black">
+                        <h2 className="text-base md:text-lg lg:text-xl font-semibold mb-6 lg:mb-10 text-black">
                             Login through OTP
-                        </h1>
+                        </h2>
 
                         <form onSubmit={handleSubmit}>
                             {/* Phone Number Field */}
-                            <div className="flex flex-col gap-2 mb-10">
-                                <label className="block text-[1.05rem] font-medium text-black">
+                            <div className="flex flex-col gap-2 mb-8">
+                                <label className="block text-sm md:text-base font-medium text-black">
                                     Phone Number (for OTP)
                                 </label>
                                 {errors.phone && (
@@ -134,7 +140,7 @@ export default function OTPLoginStatic() {
                             </div>
 
                             {/* OTP Fields */}
-                            <label className="block text-[1.05rem] font-medium text-black mb-2">
+                            <label className="block text-sm md:text-base font-medium text-black mb-2">
                                 OTP
                             </label>
                             {errors.otp && (
@@ -156,18 +162,37 @@ export default function OTPLoginStatic() {
                                 ))}
                             </div>
 
-                            <p className="text-[12px] text-black mb-5">
+                            <p className="text-xs text-gray-600 mb-6">
                                 Enter the OTP received via SMS
                             </p>
 
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className="w-[80%] py-4 bg-[#6ebdfc] hover:bg-sky-400 text-white text-[1.2rem] transition"
+                                className="w-[80%] py-4 bg-[#6ebdfc] hover:bg-sky-400 text-white text-base md:text-lg font-medium transition"
                             >
                                 Submit
                             </button>
                         </form>
+
+                        {/* OR Divider */}
+                        <div className="flex items-center gap-4 my-8 pt-7 lg:pt-15">
+                            <div className="flex-1 border-t border-black w-[40%]"></div>
+                            <span className="text-black font-medium text-lg">OR</span>
+                            <div className="flex-1 border-t border-gray-black"></div>
+                        </div>
+
+                        {/* Google Login Button */}
+                        <button
+                            type="button"
+                            onClick={handleGoogleLogin}
+                            className="w-[100%] md:w-[45%] flex items-center justify-center gap-3 py-3 px-4 bg-white border-2 border-gray-300"
+                        >
+                            <FcGoogle className="text-2xl" />
+                            <span className="text-gray-700 font-medium text-base">
+                                Log in with Google
+                            </span>
+                        </button>
                     </div>
 
                     {/* Right Section - Image */}
@@ -175,7 +200,7 @@ export default function OTPLoginStatic() {
                         <img
                             src="/principallogin.png"
                             alt="Illustration"
-                            className="max-h-[420px] 2xl:max-h-[500px] w-135 object-contain"
+                            className="max-h-[420px] xl:max-h-[480px] 2xl:max-h-[520px] w-auto object-contain"
                         />
                     </div>
                 </div>

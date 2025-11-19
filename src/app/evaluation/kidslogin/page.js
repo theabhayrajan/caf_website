@@ -1,19 +1,41 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "../../../components/Header";
 import { FaArrowRight } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function OTPLoginStatic() {
-     const router = useRouter();
+    const router = useRouter();
     const [phone, setPhone] = useState("");
     const [otp, setOtp] = useState(["", "", "", ""]);
     const [errors, setErrors] = useState({});
     const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
+    // Prevent body scroll only on large screens (lg breakpoint = 1024px)
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) {
+                document.body.style.overflow = "hidden";
+                document.body.style.height = "100vh";
+            } else {
+                document.body.style.overflow = "auto";
+                document.body.style.height = "auto";
+            }
+        };
+
+        handleResize(); // Initial check
+        window.addEventListener("resize", handleResize);
+        
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            document.body.style.overflow = "auto";
+            document.body.style.height = "auto";
+        };
+    }, []);
+
     const handlePhoneChange = (e) => {
-        const value = e.target.value.replace(/\D/g, ""); // only digits
+        const value = e.target.value.replace(/\D/g, "");
         setPhone(value);
     };
 
@@ -23,7 +45,6 @@ export default function OTPLoginStatic() {
         newOtp[index] = value;
         setOtp(newOtp);
 
-        // move to next input
         if (value && index < 3) otpRefs[index + 1].current.focus();
     };
 
@@ -51,26 +72,26 @@ export default function OTPLoginStatic() {
 
         toast.success("OTP Verified Successfully!");
 
-        // Redirect after short delay
         setTimeout(() => {
-            router.push("/evaluation/kidsdetails"); // change route as per your app
+            router.push("/evaluation/kidsdetails");
         }, 1500);
     };
 
     return (
-        <>
+        <div className="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden">
             <Header />
-            <div className="flex items-start justify-center h-200 sm:h-190 md:h-[85vh] xl:h-180 px-4 overflow-y-hidden overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl">
-                     <div className="flex lg:hidden items-center justify-center mt-5">
+            <div className="flex-1 flex items-center justify-center px-4 overflow-y-auto lg:overflow-hidden">
+                <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
+                    <div className="flex lg:hidden items-center justify-center mt-5">
                         <img
                             src="/kidsotp.png"
                             alt="Illustration"
                             className="max-h-[300px] sm:max-h-[320px] md:max-h-[350px] w-90 object-contain"
                         />
                     </div>
+
                     {/* Left Section */}
-                    <div className="flex flex-col justify-center px-8 md:px-20 w-full sm:w-150 ml-5 mt-5 md:mt-10 lg:mt-0 lg:ml-0 xl:ml-10">
+                    <div className="flex flex-col justify-center lg:self-start lg:-translate-y-20 px-8 md:px-20 w-full sm:w-150 ml-5 mt-5 md:mt-10 lg:mt-0 lg:ml-0 xl:ml-10">
                         <h1 className="text-lg md:text-xl font-semibold mb-10 lg:mb-14 text-black">
                             Login through OTP
                         </h1>
@@ -81,11 +102,10 @@ export default function OTPLoginStatic() {
                                 <label className="block text-[1.05rem] font-medium text-black">
                                     Phone Number (for OTP)
                                 </label>
-                                  {errors.phone && (
-                                <p className="text-sm text-red-500">{errors.phone}</p>
-                            )}
+                                {errors.phone && (
+                                    <p className="text-sm text-red-500">{errors.phone}</p>
+                                )}
                                 <div className="flex items-center gap-2 mb-2">
-
                                     <input
                                         type="tel"
                                         value={phone}
@@ -104,17 +124,16 @@ export default function OTPLoginStatic() {
                                         }}
                                         className="bg-[#6ebdfc] hover:bg-sky-400 text-white p-4 transition"
                                     >
-                                        <FaArrowRight size={25}/>
+                                        <FaArrowRight size={25} />
                                     </button>
                                 </div>
                             </div>
-                          
 
                             {/* OTP Fields */}
                             <label className="block text-[1.05rem] font-medium text-black mb-2">
                                 OTP
                             </label>
-                             {errors.otp && (
+                            {errors.otp && (
                                 <p className="text-sm text-red-500 mb-3">{errors.otp}</p>
                             )}
                             <div className="flex gap-2 mb-2">
@@ -132,7 +151,6 @@ export default function OTPLoginStatic() {
                                     />
                                 ))}
                             </div>
-                           
 
                             <p className="text-[12px] text-black mb-5">
                                 Enter the OTP received via SMS
@@ -149,15 +167,15 @@ export default function OTPLoginStatic() {
                     </div>
 
                     {/* Right Section - Image */}
-                    <div className="hidden lg:flex items-center justify-center mt-60 xl:mt-70">
+                    <div className="hidden lg:flex items-center justify-center">
                         <img
                             src="/kidsotp.png"
                             alt="Illustration"
-                            className="max-h-[420px] 2xl:max-h-[950px] w-90 object-contain"
+                            className="max-h-[420px] 2xl:max-h-[500px] w-90 object-contain"
                         />
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

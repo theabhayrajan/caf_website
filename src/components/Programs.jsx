@@ -12,7 +12,7 @@ export default function SchoolProgramCard() {
 
       {/* Right Content Section */}
       <div className="w-full md:w-200 p-6 md:p-10 flex flex-col justify-center text-center lg:text-left lg:gap-4">
-        <h2 className="text-2xl sm:text-3xl font-bold inline-block py-1 mb-4 lg:mb-12 text-gray-900">
+        <h2 className="text-[1.5rem] sm:text-3xl lg:text-[1.8rem] xl:text-[1.9rem] font-bold inline-block py-1 mb-4 lg:mb-10 text-gray-900">
           CAFs Programs At schools
         </h2>
 
@@ -25,7 +25,7 @@ export default function SchoolProgramCard() {
           />
         </div>
 
-        <p className="text-gray-700 text-sm sm:text-base md:text-[1.1rem] lg:text-[1.1rem] leading-relaxed md:pr-6 2xl:mr-10">
+        <p className="text-gray-700 text-[1.05rem] text-left sm:text-[1.1rem] md:text-[1.2rem] lg:text-[1.15rem] xl:text-[1.2rem] leading-relaxed 2xl:mr-10">
           Children go through key stages—from early bonding and trust-building in infancy,
           to developing independence and self-control in toddlerhood, and forming friendships
           and understanding social rules in early childhood. As they grow, school-age kids
