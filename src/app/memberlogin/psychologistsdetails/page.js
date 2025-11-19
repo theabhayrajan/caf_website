@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Header from "../../../components/Header";
 import toast from "react-hot-toast";
 
@@ -13,6 +14,7 @@ export default function OTPLoginStatic() {
     const [testCode, setTestCode] = useState("");
     const [website, setWebsite] = useState("");
     const [agreeToMembership, setAgreeToMembership] = useState(false);
+    const [agreeToService, setAgreeToService] = useState(false);
     const [errors, setErrors] = useState({});
     const [experience, setExperience] = useState("");
 
@@ -45,6 +47,7 @@ export default function OTPLoginStatic() {
         if (!accreditation.trim()) formErrors.accreditation = "Pin code is required.";
         if (!testCode.trim()) formErrors.testCode = "Occupation is required.";
         if (!agreeToMembership) formErrors.agree = "You must agree to become a member of CAF.";
+        if (!agreeToService) formErrors.agree = "You must agree to become a member of CAF.";
         if (!website.trim()) formErrors.website = "Website Link is required.";
         if (!experience.trim()) formErrors.website = "Experience is required.";
         setErrors(formErrors);
@@ -69,10 +72,13 @@ export default function OTPLoginStatic() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
                     {/* Image for small screens */}
                     <div className="flex lg:hidden items-center justify-center mt-5">
-                        <img
+                        <Image
                             src="/principallogin.png"
                             alt="Illustration"
+                            width={360}
+                            height={300}
                             className="max-h-[300px] sm:max-h-[320px] md:max-h-[350px] w-90 object-contain"
+                            priority
                         />
                     </div>
 
@@ -118,7 +124,7 @@ export default function OTPLoginStatic() {
                                 </div>
                                 <div className="flex flex-col gap-2 mb-0">
                                     <label className="block text-[1.05rem] font-medium text-black">
-                                       Experience (years)
+                                        Experience (years)
                                     </label>
                                     <input
                                         type="text"
@@ -133,8 +139,6 @@ export default function OTPLoginStatic() {
                                 </div>
 
                             </div>
-
-
 
                             {/* City + Pin code */}
                             <div className="flex flex-col md:flex-row gap-8 md:gap-0 mb-10 lg:w-[350px]">
@@ -174,33 +178,33 @@ export default function OTPLoginStatic() {
                                 <div className="flex gap-5 items-start">
                                     <input
                                         type="checkbox"
-                                        name="agree"
-                                        id="agree"
+                                        name="agree1"
+                                        id="agree1"
                                         checked={agreeToMembership}
                                         onChange={(e) => setAgreeToMembership(e.target.checked)}
                                         className="w-6 h-6 mt-1"
                                     />
-                                    <label htmlFor="agree" className="text-lg">
+                                    <label htmlFor="agree1" className="text-lg">
                                         I will be a member of CAF.
                                     </label>
                                 </div>
-                                {errors.agree && <p className="text-xs text-red-500 ml-11">{errors.agree}</p>}
+                                {errors.agree1 && <p className="text-xs text-red-500 ml-11">{errors.agree1}</p>}
                             </div>
                             <div className="flex flex-col gap-2 mb-7">
                                 <div className="flex gap-5 items-start">
                                     <input
                                         type="checkbox"
-                                        name="agree"
-                                        id="agree"
-                                        checked={agreeToMembership}
-                                        onChange={(e) => setAgreeToMembership(e.target.checked)}
+                                        name="agree2"
+                                        id="agree2"
+                                        checked={agreeToService}
+                                        onChange={(e) => setAgreeToService(e.target.checked)}
                                         className="w-6 h-6 mt-1"
                                     />
-                                    <label htmlFor="agree" className="text-lg">
+                                    <label htmlFor="agree2" className="text-lg">
                                         I will also provide counselling service
                                     </label>
                                 </div>
-                                {errors.agree && <p className="text-xs text-red-500 ml-11">{errors.agree}</p>}
+                                {errors.agree2 && <p className="text-xs text-red-500 ml-11">{errors.agree2}</p>}
                             </div>
                             <div className="flex flex-col gap-2 mb-10">
                                 <label className="block text-[1.05rem] font-medium text-black">
@@ -228,10 +232,13 @@ export default function OTPLoginStatic() {
 
                     {/* Right Section - Image */}
                     <div className="hidden lg:flex items-center justify-center">
-                        <img
+                        <Image
                             src="/principallogin.png"
                             alt="Illustration"
+                            width={540}
+                            height={420}
                             className="max-h-[420px] 2xl:max-h-[500px] w-135 object-contain"
+                            priority
                         />
                     </div>
                 </div>

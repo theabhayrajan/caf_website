@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Header from "../../../components/Header";
 import toast from "react-hot-toast";
 
@@ -65,10 +66,13 @@ export default function OTPLoginStatic() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
                     {/* Image for small screens */}
                     <div className="flex lg:hidden items-center justify-center mt-5">
-                        <img
+                        <Image
                             src="/principallogin.png"
                             alt="Illustration"
+                            width={360}
+                            height={300}
                             className="max-h-[300px] sm:max-h-[320px] md:max-h-[350px] w-90 object-contain"
+                            priority
                         />
                     </div>
 
@@ -174,10 +178,13 @@ export default function OTPLoginStatic() {
 
                     {/* Right Section - Image */}
                     <div className="hidden lg:flex items-center justify-center">
-                        <img
+                        <Image
                             src="/principallogin.png"
                             alt="Illustration"
+                            width={540}
+                            height={420}
                             className="max-h-[420px] 2xl:max-h-[500px] w-135 object-contain"
+                            priority
                         />
                     </div>
                 </div>

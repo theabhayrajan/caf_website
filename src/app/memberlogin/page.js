@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import FooterSection from "../../components/FooterSection";
 import Header from "../../components/Header";
 
@@ -32,10 +33,13 @@ export default function Home() {
                         href="/memberlogin/psychologistslogin"
                         className="group flex flex-col md:flex-row items-center bg-white shadow-md p-6 cursor-pointer"
                     >
-                        <img
+                        <Image
                             src="/psychologists.png"
                             alt="For Children Psychologists"
+                            width={128}
+                            height={128}
                             className="w-28 h-32 md:w-32 md:h-36 2xl:h-40 object-contain mb-4 md:mb-0 md:mr-4 grayscale group-hover:grayscale-0 transition"
+                            priority
                         />
 
                         <div className="flex flex-col gap-7 text-center md:text-left">
@@ -53,10 +57,13 @@ export default function Home() {
                         href="/evaluation/principallogin"
                         className="group flex flex-col md:flex-row items-center bg-white shadow-md p-6 cursor-pointer"
                     >
-                        <img
+                        <Image
                             src="/Evaluation1.png"
                             alt="For School Principals"
+                            width={128}
+                            height={128}
                             className="w-28 h-32 md:w-32 md:h-36 2xl:h-40 object-contain mb-4 md:mb-0 md:mr-4 grayscale group-hover:grayscale-0 transition"
+                            priority
                         />
 
                         <div className="flex flex-col gap-7 text-center md:text-left">
