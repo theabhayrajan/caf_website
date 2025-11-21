@@ -46,8 +46,8 @@ export default function OTPLoginStatic() {
         if (!grade.trim()) formErrors.grade = "City is required.";
         if (!accreditation.trim()) formErrors.accreditation = "Pin code is required.";
         if (!testCode.trim()) formErrors.testCode = "Occupation is required.";
-        if (!agreeToMembership) formErrors.agree = "You must agree to become a member of CAF.";
-        if (!agreeToService) formErrors.agree = "You must agree to become a member of CAF.";
+        if (!agreeToMembership) formErrors.agree1 = "You must agree to become a member of CAF.";
+        if (!agreeToService) formErrors.agree2 = "You must agree to become a member of CAF.";
         if (!website.trim()) formErrors.website = "Website Link is required.";
         if (!experience.trim()) formErrors.website = "Experience is required.";
         setErrors(formErrors);
@@ -61,7 +61,7 @@ export default function OTPLoginStatic() {
         toast.success("Details submitted successfully!");
 
         setTimeout(() => {
-            router.push("/");
+            router.push("/memberlogin/psychologistspolicy");
         }, 1500);
     };
 
@@ -127,7 +127,7 @@ export default function OTPLoginStatic() {
                                         Experience (years)
                                     </label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         value={experience}
                                         onChange={(e) => setExperience(e.target.value)}
                                         className={`w-[100%] md:w-[150px] lg:w-[80px] border ${errors.experience ? "border-red-500" : "border-gray-300"

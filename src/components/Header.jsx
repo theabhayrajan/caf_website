@@ -61,7 +61,7 @@ export default function Header() {
               <span className="font-bold text-sm sm:text-md leading-none hidden sm:inline">
                 Cognitive Alliance Forumz (CAF)
               </span>
-              <span className="font-medium text-xs sm:hidden">CAF</span>
+              <span className="font-medium text-[1.1rem] sm:hidden">CAF</span>
             </div>
 
             {/* Right: Greeting + Icons + Hamburger */}
