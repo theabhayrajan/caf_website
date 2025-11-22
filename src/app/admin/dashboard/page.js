@@ -288,7 +288,7 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* 🔥 Add New Question Button - MOVED HERE (Below Question Cards) */}
+        {/* Add New Question Button - MOVED HERE (Below Question Cards) */}
         {!showNewQuestionForm && (
           <div className="mb-6">
             <button
