@@ -34,6 +34,7 @@ export default function Header() {
         { name: "Programs & resources", href: "/videoLearningPage" },
         { name: "Articles & Discussions", href: "/articles" },
         { name: "Create Test", href: "/admin/dashboard" },
+        // { name: "View All Test", href: "/admin/view-all-tests" },
     ];
 
     return (

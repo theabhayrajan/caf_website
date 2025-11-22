@@ -126,7 +126,7 @@ export default function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto p-6">
         {/* Class and Test Code Selection */}
-        <div className="bg-white shadow-md p-6 mb-6">
+        <div className="bg-white shadow-md px-6 py-4.5 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm xl:text-base font-semibold text-gray-700 mb-2">
@@ -199,11 +199,11 @@ export default function AdminDashboard() {
 
           {/* Status Indicator */}
           {isFormValid && (
-            <div className="mt-4 p-3 bg-green-50 border border-green-200 flex items-center gap-2 text-green-700">
+            <div className="mt-2 flex items-center gap-2 text-green-700">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              <span className="text-sm font-medium">
+              <span className="text-[0.8rem] sm:text-sm font-medium">
                 Ready to add questions for <strong>{selectedClass.replace('-', ' ').toUpperCase()}</strong> - <strong>{testCode}</strong>
               </span>
             </div>
