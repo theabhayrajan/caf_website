@@ -17,7 +17,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
     if (initialData) {
       setVideoLink(initialData.videoLink || '');
       setQuestionCount(initialData.questions.length.toString());
-      
+
       const mappedQuestions = initialData.questions.map(q => ({
         title: q.title || '',
         options: q.options || ['', '', '', ''],
@@ -25,7 +25,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
         image: q.image || null,
         imagePreview: q.imagePreview || null
       }));
-      
+
       setQuestions(mappedQuestions);
       setIsEditMode(true);
       setCurrentStep(1);
@@ -57,7 +57,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
   // Handle dynamic question count changes while preserving existing data
   const handleQuestionCountChange = (newCount) => {
     const count = parseInt(newCount);
-    
+
     if (count > 0 && count <= 100) {
       const currentCount = questions.length;
 
@@ -98,7 +98,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
 
   const handleQuestionChange = (field, value) => {
     if (questions.length === 0) return;
-    
+
     const updated = [...questions];
     updated[currentStep - 1] = {
       ...updated[currentStep - 1],
@@ -115,7 +115,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
 
   const handleOptionChange = (optionIndex, value) => {
     if (questions.length === 0) return;
-    
+
     const updated = [...questions];
     updated[currentStep - 1].options[optionIndex] = value;
     setQuestions(updated);
@@ -159,7 +159,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
 
   const validateCurrentQuestion = () => {
     if (questions.length === 0) return false;
-    
+
     const current = questions[currentStep - 1];
     const errors = {};
 
@@ -202,7 +202,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
         videoLink,
         questions
       };
-      
+
       onSubmit(formData);
     }
   };
@@ -256,7 +256,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
       {/* Always Visible: Video Link & Question Count Form */}
       <div className="bg-white shadow-lg p-6">
         <h3 className="text-lg font-bold text-gray-800 mb-4">Video & Question Settings</h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm xl:text-base font-semibold text-gray-700 mb-2">
@@ -344,11 +344,10 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
                           setValidationErrors({});
                           setCurrentStep(step);
                         }}
-                        className={`min-w-[44px] h-11 rounded-full flex items-center justify-center font-semibold transition-all px-3 ${
-                          step < currentStep ? 'bg-emerald-500 text-white shadow-md' :
-                          step === currentStep ? 'bg-white text-[#3690e5] ring-4 ring-white/30 scale-110 shadow-lg' :
-                          'bg-[#eaeaea] text-[#3690e5] hover:bg-white'
-                        }`}
+                        className={`min-w-[44px] h-11 rounded-full flex items-center justify-center font-semibold transition-all px-3 ${step < currentStep ? 'bg-emerald-500 text-white shadow-md' :
+                            step === currentStep ? 'bg-white text-[#3690e5] ring-4 ring-white/30 scale-110 shadow-lg' :
+                              'bg-[#eaeaea] text-[#3690e5] hover:bg-white'
+                          }`}
                       >
                         {step}
                       </button>
@@ -386,9 +385,8 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
                   <textarea
                     value={currentQuestion.title}
                     onChange={(e) => handleQuestionChange('title', e.target.value)}
-                    className={`w-full px-4 py-3 border focus:ring-2 focus:ring-[#6ebdfc] focus:border-transparent outline-none resize-none transition-colors ${
-                      validationErrors.title ? 'border-red-500 bg-red-50' : 'border-gray-300'
-                    }`}
+                    className={`w-full px-4 py-3 border focus:ring-2 focus:ring-[#6ebdfc] focus:border-transparent outline-none resize-none transition-colors ${validationErrors.title ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                      }`}
                     rows="3"
                     placeholder="What would you do if your friend dropped their lunch?"
                   />
@@ -420,9 +418,8 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
                               type="text"
                               value={option}
                               onChange={(e) => handleOptionChange(index, e.target.value)}
-                              className={`flex-1 px-4 py-3 border focus:ring-2 focus:ring-[#6ebdfc] focus:border-transparent outline-none transition-colors ${
-                                validationErrors[`option-${index}`] ? 'border-red-500 bg-red-50' : 'border-gray-300'
-                              }`}
+                              className={`flex-1 px-4 py-3 border focus:ring-2 focus:ring-[#6ebdfc] focus:border-transparent outline-none transition-colors ${validationErrors[`option-${index}`] ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                                }`}
                               placeholder={`Option ${String.fromCharCode(65 + index)}`}
                             />
                           </div>
@@ -517,12 +514,12 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex gap-3 mt-8 pt-6 border-t border-gray-200">
+            <div className="flex flex-col sm:flex-row gap-3 lg:mt-8 pt-6 border-t border-gray-200 w-full">
               <button
                 onClick={currentStep === 1 ? onCancel : handleBack}
-                className="px-6 py-3 bg-gray-300 text-gray-700 font-semibold hover:bg-gray-400 transition-colors flex items-center gap-2"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-gray-300 text-gray-700 font-semibold hover:bg-gray-400 transition-colors flex items-center justify-center gap-2 text-base rounded"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 {currentStep === 1 ? 'Cancel' : 'Back'}
@@ -531,25 +528,26 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
               {currentStep < totalSteps ? (
                 <button
                   onClick={handleNext}
-                  className="flex-1 bg-[#3690e5] text-white py-3 font-semibold hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+                  className="flex-1 bg-[#3690e5] text-white py-2 sm:py-3 font-semibold hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-base rounded"
                 >
                   Next
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="flex-1 bg-[#3690e5] text-white py-3 font-semibold hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+                  className="flex-1 bg-[#3690e5] text-white py-2 sm:py-3 font-semibold hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-base rounded"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   {isEditMode ? 'Update & Save Questions Set' : 'Save Questions Set'}
                 </button>
               )}
             </div>
+
           </div>
         </div>
       ) : (

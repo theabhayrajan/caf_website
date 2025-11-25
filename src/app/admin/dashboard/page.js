@@ -96,11 +96,10 @@ export default function AdminDashboard() {
                   setSelectedClass(e.target.value);
                   setShowValidationError(false);
                 }}
-                className={`w-full px-4 py-3 border focus:ring-2 focus:ring-[#6ebdfc] focus:border-transparent outline-none transition-colors ${
-                  showValidationError && !selectedClass
+                className={`w-full px-4 py-3 border focus:ring-2 focus:ring-[#6ebdfc] focus:border-transparent outline-none transition-colors ${showValidationError && !selectedClass
                     ? "border-red-500 bg-red-50"
                     : "border-gray-300"
-                }`}
+                  }`}
               >
                 {CLASS_OPTIONS.map((cls) => (
                   <option key={cls.value} value={cls.value}>
@@ -125,11 +124,10 @@ export default function AdminDashboard() {
                   setTestCode(e.target.value);
                   setShowValidationError(false);
                 }}
-                className={`w-full px-4 py-3 border focus:ring-2 focus:ring-[#6ebdfc] focus:border-transparent outline-none transition-colors ${
-                  showValidationError && !testCode.trim()
+                className={`w-full px-4 py-3 border focus:ring-2 focus:ring-[#6ebdfc] focus:border-transparent outline-none transition-colors ${showValidationError && !testCode.trim()
                     ? "border-red-500 bg-red-50"
                     : "border-gray-300"
-                }`}
+                  }`}
                 placeholder="Enter unique test code (e.g., TEST001)"
               />
               {showValidationError && !testCode.trim() && (
@@ -158,11 +156,10 @@ export default function AdminDashboard() {
             <button
               onClick={handleAddQuestionClick}
               disabled={!isFormValid}
-              className={`px-6 py-3 transition-all duration-200 flex items-center gap-2 ${
-                isFormValid
+              className={`px-6 py-3 transition-all duration-200 flex items-center gap-2 ${isFormValid
                   ? "bg-[#3690e5] text-white xl:text-lg hover:shadow-lg cursor-pointer"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-60"
-              }`}
+                }`}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -240,18 +237,19 @@ export default function AdminDashboard() {
                         onClick={() => handleEditQuestionSet(index)}
                         className="bg-[#3690e5] text-white py-2 px-4 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors flex items-center gap-2"
                       >
-                        <span className="hidden sm:inline">Edit</span>
+                        <span>Edit</span>
                       </button>
                       <button
                         onClick={() => handleDeleteQuestionSet(index)}
                         className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm font-semibold hover:bg-red-600 transition-colors flex items-center gap-2"
                       >
-                        <span className="hidden sm:inline">Delete</span>
+                        <span>Delete</span>
                       </button>
                     </div>
+
                   </div>
                 );
-              })}
+              })} v
             </div>
           </div>
         )}

@@ -8,7 +8,7 @@ export default function Page() {
     const router = useRouter();
 
     const handleNavigation = () => {
-        router.push('/your-target-page'); // Replace with your actual route
+        router.push('/articles'); // Replace with your actual route
     };
 
     return (
