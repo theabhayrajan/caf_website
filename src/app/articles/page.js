@@ -65,7 +65,7 @@ export default function ArticlesPage() {
         setSelected(all[0]);
       }
     };
-  });
+  },[]);
 
   return (
     <>
