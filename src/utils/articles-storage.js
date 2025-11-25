@@ -1,4 +1,6 @@
 // utils/articles-storage.js
+"use client";
+
 const LOCAL_KEY = "ARTICLES_STORE";
 
 export function getArticles() {
