@@ -15,9 +15,6 @@ const ClassicEditor = dynamic(() => import("@ckeditor/ckeditor5-build-classic"),
   ssr: false,
 });
 
-import { getArticles, saveArticles } from "@/utils/articles-storage";
-import Header from "@/components/SuperAdminHeader";
-
 export default function WriteArticlePage() {
     const router = useRouter();
     const [title, setTitle] = useState("");
