@@ -1,9 +1,21 @@
 "use client";
+"use client";
+
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getArticles, saveArticles } from "@/utils/articles-storage";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Header from "@/components/SuperAdminHeader";
+
+const CKEditor = dynamic(() => import("@ckeditor/ckeditor5-react").then(m => m.CKEditor), {
+  ssr: false,
+});
+
+const ClassicEditor = dynamic(() => import("@ckeditor/ckeditor5-build-classic"), {
+  ssr: false,
+});
+
+import { getArticles, saveArticles } from "@/utils/articles-storage";
 import Header from "@/components/SuperAdminHeader";
 
 export default function WriteArticlePage() {
