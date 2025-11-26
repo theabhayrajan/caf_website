@@ -10,7 +10,7 @@ const SAMPLE_ARTICLES = [
     id: 1,
     title: "Cognitive Development Theory",
     author: "Jean Piaget",
-    image: "/sample-piaget.jpg", // Make sure this image exists in /public or change path
+    image: "/articlePerson.png", // Make sure this image exists in /public or change path
     content: `<h2 class="font-bold text-2xl mb-4 mt-0">Cognitive Development Theory</h2>
       <p>Jean Piaget (1896–1980) was a Swiss psychologist renowned for his groundbreaking work in developmental psychology, particularly in understanding how children's cognitive abilities develop over time. His theory of cognitive development is one of the most influential frameworks in developmental psychology, explaining how children actively construct their understanding of the world through stages of increasingly complex thinking.</p>
       <h3 class="font-semibold text-lg mt-5 mb-2">Key Concepts of Piaget's Theory:</h3>
@@ -73,9 +73,9 @@ export default function ArticlesPage() {
       <div className="bg-[#f3f3f3]">
         <div className="flex flex-col lg:flex-row h-screen gap-3 xl:w-[98vw]">
           {/* Sidebar: horizontal on mobile/tablet, vertical on desktop */}
-          <div className="w-full lg:w-80 2xl:w-95 bg-gray-50 border-b lg:border-b-0 lg:border-r border-white  flex-shrink-0">
+          <div className="w-full lg:w-80 2xl:w-95 bg-white border-b lg:border-b-0 lg:border-r border-white  flex-shrink-0">
             {/* <h3 className="font-bold text-lg px-4 py-4 border-b border-gray-200">Articles</h3> */}
-            <ul className="overflow-x-auto flex lg:block flex-row lg:flex-col pl-5 pt-10">
+            <ul className="overflow-x-auto flex lg:block flex-row lg:flex-col pl-5 pt-5 lg:pt-10">
               {articles.map((a) => (
                 <li
                   key={a.id}
@@ -108,7 +108,7 @@ export default function ArticlesPage() {
           </div>
 
           {/* Main content */}
-          <div className="flex-1 overflow-y-auto bg-white flex flex-col min-h-0">
+          <div className="flex-1 overflow-y-hidden bg-white flex flex-col min-h-0 lg:px-10 2xl:px-0">
             {/* Top bar with button */}
             <div className="flex justify-end items-center px-10 pt-5 pb-2">
               <button
@@ -126,13 +126,13 @@ export default function ArticlesPage() {
                 Write Articles / Blogs
               </button>
             </div>
-            <div className="bg-[#f3f3f3] w-full h-1.5">
+            <div className="bg-[#f3f3f3] w-full h-1.5 hidden lg:block">
 
             </div>
 
             {/* Article content */}
             {selected && (
-              <div className="flex flex-col items-center w-full max-w-full">
+              <div className="flex flex-col items-center w-full max-w-full 2xl:px-10">
                 <div className="flex flex-col md:flex-row w-full max-w-6xl px-4 sm:px-10 lg:pl-0 lg:px-0 pt-8 md:pt-10 items-start gap-10 md:gap-14">
                   {/* LEFT: Article Image */}
                   <div className="flex-shrink-0 flex flex-col items-center md:items-start w-full md:w-[340px]">
