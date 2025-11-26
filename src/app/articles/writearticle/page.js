@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getArticles, saveArticles } from "@/utils/articles-storage";
-import SuperAdminHeader from "@/components/SuperAdminHeader";
 import ClientOnlyCKEditor from "@/components/ClientOnlyCKEditor";
+import Header from "@/components/Header";
 
 export default function WriteArticlePage() {
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function WriteArticlePage() {
 
   return (
     <>
-      <SuperAdminHeader />
+      <Header />
       <div className="min-h-screen bg-gray-100 flex px-3 sm:px-6 lg:px-0 py-10 justify-center">
         <div className="w-full max-w-5xl bg-white rounded-xl shadow p-5 sm:p-7 lg:p-10 flex flex-col gap-10">
           <div className="flex flex-col lg:flex-row gap-10">
