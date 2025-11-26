@@ -18,9 +18,9 @@ const SAMPLE_ARTICLES = [
       <h3 class="font-semibold text-lg mt-5 mb-2">Key Concepts of Piaget's Theory:</h3>
       <ul class="list-disc ml-6">
         <li><b>Schemes:</b> Mental frameworks or structures that help individuals organize and interpret information.</li>
-        <li><b>Assimilation:</b> The process of incorporating new information into existing schemas.</li>
-        <li><b>Accommodation:</b> Modifying existing schemas to incorporate new information.</li>
-        <li><b>Equilibration:</b> The process of balancing assimilation and accommodation to achieve cognitive stability.</li>
+        <li><b>Assimilation: </b> The process of incorporating new information into existing schemas.</li>
+        <li><b>Accommodation: </b> Modifying existing schemas to incorporate new information.</li>
+        <li><b>Equilibration: </b> The process of balancing assimilation and accommodation to achieve cognitive stability.</li>
       </ul>
       <h4 class="mt-5 font-semibold">The Four Stages of Cognitive Development:</h4>
       <ol class="list-decimal ml-6">
