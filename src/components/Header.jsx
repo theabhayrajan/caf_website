@@ -42,7 +42,7 @@ export default function Header() {
       
       <header
         ref={headerRef}
-        className={`w-full z-50 top-0 transition-all duration-300 ${
+        className={`w-full shadow-lg z-50 top-0 transition-all duration-300 ${
           isSticky ? "fixed bg-white/95 backdrop-blur-xs" : "relative"
         }`}
       >

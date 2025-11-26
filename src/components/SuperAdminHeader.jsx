@@ -29,12 +29,12 @@ export default function Header() {
     const showBackButton = pathSegments.length >= 2;
 
     const links = [
-        { name: "Home", href: "/" },
-        { name: "Evaluation", href: "/evaluation" },
-        { name: "Programs & resources", href: "/videoLearningPage" },
-        { name: "Articles & Discussions", href: "/articles" },
+        // { name: "Home", href: "/" },
+        // { name: "Evaluation", href: "/evaluation" },
+        // { name: "Programs & resources", href: "/videoLearningPage" },
+        // { name: "Articles & Discussions", href: "/articles" },
         { name: "Create Test", href: "/admin/dashboard" },
-        // { name: "View All Test", href: "/admin/view-all-tests" },
+        { name: "View All Test", href: "/admin/view-all-tests" },
     ];
 
     return (
