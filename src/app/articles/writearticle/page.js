@@ -13,53 +13,27 @@ export default function WriteArticlePage() {
   const [imagePreview, setImagePreview] = useState("");
   const [content, setContent] = useState("");
 
-  const [uploading, setUploading] = useState(false);
-
-  const handleImageChange = async e => {
+  const handleImageChange = e => {
     const file = e.target.files[0];
     setImage(file);
     if (file) {
-      // Show preview (this is fine for UX)
       const reader = new FileReader();
       reader.onload = evt => setImagePreview(evt.target.result);
       reader.readAsDataURL(file);
     }
   };
 
-  async function uploadImageAndGetUrl(file) {
-    const formData = new FormData();
-    formData.append("image", file);
-    const res = await fetch("/api/uploadimg", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await res.json();
-    return data.url; // the URL returned from backend
-  }
-
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    setUploading(true);
-    let imageUrl = "";
-    if (image) {
-      try {
-        imageUrl = await uploadImageAndGetUrl(image);
-      } catch (err) {
-        alert("Image upload failed!");
-        setUploading(false);
-        return;
-      }
-    }
     const all = getArticles();
     all.unshift({
       id: Date.now(),
       title,
       author: author || "Anonymous",
-      image: imageUrl || "/default.jpg",
+      image: imagePreview || "/default.jpg",
       content
     });
     saveArticles(all);
-    setUploading(false);
     router.push("/articles");
   };
 
