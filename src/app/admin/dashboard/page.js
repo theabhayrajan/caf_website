@@ -249,7 +249,7 @@ export default function AdminDashboard() {
 
                   </div>
                 );
-              })} v
+              })}
             </div>
           </div>
         )}
