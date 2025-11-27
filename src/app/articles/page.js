@@ -325,7 +325,7 @@ export default function ArticlesPage() {
             {!editing && (
               <div className="flex justify-end items-center px-2 sm:px-10 pt-3 sm:pt-5 pb-2 gap-2">
                 <button
-                  className="flex items-center gap-1 text-[#298ade] font-semibold px-2 py-1 rounded active:bg-blue-100 transition select-none"
+                  className="flex items-center gap-1 text-[#298ade] cursor-pointer font-semibold px-2 py-1 rounded active:bg-blue-100 transition select-none"
                   onClick={() => router.push("/articles/writearticle")}
                   style={{ fontSize: "17px" }}
                 >
@@ -347,7 +347,7 @@ export default function ArticlesPage() {
                   {/* Only show Edit if article is selected, not editing */}
                   {selected && !editing && (
                     <button
-                      className="flex items-center gap-1 text-[#e61111f1] font-semibold px-2 pt-3 transition select-none"
+                      className="flex items-center cursor-pointer gap-1 text-[#e61111f1] font-semibold px-2 pt-3 transition select-none"
                       onClick={() => { setEditing(true); setEditChanged(false); }}
 
                       style={{ fontSize: "17px" }}
@@ -449,7 +449,7 @@ export default function ArticlesPage() {
                         <button
                           type="submit"
                           disabled={!editChanged}
-                          className={`bg-blue-600 text-white font-semibold px-6 py-2 rounded-md 
+                          className={`bg-blue-600 text-white font-semibold cursor-pointer px-6 py-2 rounded-md 
     hover:bg-blue-700 active:bg-blue-800 transition w-full sm:w-auto
     ${!editChanged ? "opacity-60 cursor-not-allowed pointer-events-none" : ""}`}
                         >
@@ -458,7 +458,7 @@ export default function ArticlesPage() {
 
                         <button
                           type="button"
-                          className="bg-gray-200 text-gray-800 font-semibold px-6 py-2 rounded-md hover:bg-gray-300 transition w-full sm:w-auto"
+                          className="bg-gray-200 text-gray-800 cursor-pointer font-semibold px-6 py-2 rounded-md hover:bg-gray-300 transition w-full sm:w-auto"
                           onClick={() => setEditing(false)}
                         >
                           Cancel
