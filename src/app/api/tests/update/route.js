@@ -2,16 +2,16 @@ import mysql from "mysql2/promise";
 
 export async function POST(req) {
   try {
-    const body = await req.json();
+    const form = await req.formData();
 
-    const {
-      test_id,
-      class_id,
-      test_code,
-      video_link,
-      total_questions,
-      questions,
-    } = body;
+    const test_id = form.get("test_id");
+    const class_test_id = form.get("class_test_id");
+    const class_id = form.get("class_id");
+    const test_code = form.get("test_code");
+    const video_link = form.get("video_link");
+    const total_questions = form.get("total_questions");
+
+    const questions = JSON.parse(form.get("questions"));
 
     const db = await mysql.createConnection({
       host: "localhost",
@@ -20,43 +20,54 @@ export async function POST(req) {
       database: "caf_system",
     });
 
+    // UPDATE class_tests
     await db.execute(
-      `UPDATE questions 
-       SET class_id=?, test_code=?, video_link=?, total_questions=? 
+      `UPDATE class_tests 
+       SET class_id=?, test_code=?
        WHERE id=?`,
-      [class_id, test_code, video_link, total_questions, test_id]
+      [class_id, test_code, class_test_id]
     );
 
-for (const q of questions) {
-  if (!q.id) continue;
+    // UPDATE main test table
+    await db.execute(
+      `UPDATE questions
+       SET video_link=?, total_questions=?
+       WHERE id=?`,
+      [video_link, total_questions, test_id]
+    );
+
+    // UPDATE each question_list row
+    for (const q of questions) {
+      if (!q?.id) continue;
 
       await db.execute(
-        `UPDATE question_list
-          SET 
-            title = ?, 
-            image_url = ?,
-            question_choice1 = ?, 
-            question_choice2 = ?, 
-            question_choice3 = ?, 
-            question_choice4 = ?, 
-            correct_answer = ?
-          WHERE id = ?`,
+        `UPDATE question_list 
+         SET 
+           title=?,
+           image_url=?,
+           question_choice1=?,
+           question_choice2=?,
+           question_choice3=?,
+           question_choice4=?,
+           correct_answer=?
+         WHERE id=?`,
         [
           q.title ?? "",
-          q.image_url ?? "",   // <-- NEW LINE (update image)
-          q.choice1 ?? "",
-          q.choice2 ?? "",
-          q.choice3 ?? "",
-          q.choice4 ?? "",
-          q.correct_answer ?? 1,
+          q.image_url ?? null,
+          q.options?.[0] ?? "",
+          q.options?.[1] ?? "",
+          q.options?.[2] ?? "",
+          q.options?.[3] ?? "",
+          parseInt(q.correctAnswer) || 1, 
           q.id,
         ]
       );
     }
 
     return Response.json({ success: true });
+
   } catch (error) {
-    console.log(error);
+    console.log("UPDATE ERROR →", error);
     return Response.json({ success: false, error });
   }
 }

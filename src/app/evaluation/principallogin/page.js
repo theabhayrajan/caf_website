@@ -27,7 +27,7 @@ export default function OTPLoginStatic() {
 
         handleResize(); // Initial check
         window.addEventListener("resize", handleResize);
-        
+
         return () => {
             window.removeEventListener("resize", handleResize);
             document.body.style.overflow = "auto";
@@ -67,15 +67,53 @@ export default function OTPLoginStatic() {
         return Object.keys(formErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
 
-        toast.success("OTP Verified Successfully!");
+        const res = await fetch("/api/principal/verify-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                phone,
+                otp: otp.join("")
+            }),
+        });
 
-        setTimeout(() => {
-            router.push("/evaluation/principaldetails");
-        }, 1500);
+        const data = await res.json();
+
+        if (data.success) {
+            toast.success("OTP Verified!");
+
+            if (data.profileComplete) {
+                router.push("/"); // Home page
+            } else {
+                router.push(`/evaluation/principaldetails?principalId=${data.principalId}`);
+            }
+        } else {
+            toast.error(data.message || "Invalid OTP");
+        }
+    };
+
+    const sendOTP = async () => {
+        if (phone.length !== 10) {
+            setErrors({ phone: "Enter valid 10-digit number" });
+            return;
+        }
+
+        const res = await fetch("/api/principal/send-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            toast.success("Demo OTP generated! Check console.");
+        } else {
+            toast.error(data.message || "Failed to send OTP");
+        }
     };
 
     return (
@@ -121,17 +159,7 @@ export default function OTPLoginStatic() {
                                         className={`w-[80%] border ${errors.phone ? "border-red-500" : "border-gray-300"
                                             } p-3 py-4 bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400`}
                                     />
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            if (phone.length === 10) {
-                                                toast.success("OTP sent to your phone number!");
-                                            } else {
-                                                setErrors({ phone: "Enter a valid 10-digit number first." });
-                                            }
-                                        }}
-                                        className="bg-[#6ebdfc] hover:bg-sky-400 text-white p-4 transition"
-                                    >
+                                    <button type="button" onClick={sendOTP} className="bg-[#6ebdfc] text-white p-4">
                                         <FaArrowRight size={25} />
                                     </button>
                                 </div>

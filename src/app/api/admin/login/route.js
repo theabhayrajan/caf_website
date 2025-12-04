@@ -36,6 +36,7 @@ export async function POST(req) {
         { status: 401 }
       );
     }
+
     const secret = process.env.JWT_SECRET;
     if (!secret) {
       return NextResponse.json(
@@ -50,10 +51,22 @@ export async function POST(req) {
       { expiresIn: "1d" }
     );
 
-    return NextResponse.json({
+    // ✅ Set cookie from server (most reliable)
+    const response = NextResponse.json({
       message: "Login successful",
       token,
     });
+
+    response.cookies.set({
+      name: "caf_admin_token",
+      value: token,
+      path: "/",
+      maxAge: 86400,
+      sameSite: "Lax",
+    });
+
+    return response;
+
   } catch (err) {
     return NextResponse.json(
       { error: err.message || "Server error" },

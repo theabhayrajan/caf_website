@@ -1,12 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Header from "../../../components/Header";
 import toast from "react-hot-toast";
 
 export default function OTPLoginStatic() {
     const router = useRouter();
+    const params = useSearchParams();
+    const principalId = params.get("principalId");
 
     const [name, setName] = useState("");
     const [grade, setGrade] = useState("");
@@ -14,8 +16,8 @@ export default function OTPLoginStatic() {
     const [testCode, setTestCode] = useState("");
     const [agreeToMembership, setAgreeToMembership] = useState(false);
     const [errors, setErrors] = useState({});
-
-    // Prevent body scroll only on large screens (lg breakpoint = 1024px)
+ 
+    
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1024) {
@@ -29,7 +31,7 @@ export default function OTPLoginStatic() {
 
         handleResize(); // Initial check
         window.addEventListener("resize", handleResize);
-        
+
         return () => {
             window.removeEventListener("resize", handleResize);
             document.body.style.overflow = "auto";
@@ -48,16 +50,44 @@ export default function OTPLoginStatic() {
         return Object.keys(formErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
 
-        toast.success("Details submitted successfully!");
+        const params = new URLSearchParams(window.location.search);
+        const principalId = params.get("principalId");
 
-        setTimeout(() => {
-            router.push("/");
-        }, 1500);
+        if (!principalId) {
+            toast.error("Missing principal ID");
+            return;
+        }
+
+        const res = await fetch("/api/principal/profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                principalId,
+                name,
+                test_code: testCode,
+                city: grade,
+                pincode: accreditation,
+                is_member: agreeToMembership
+            }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            toast.success("Details submitted successfully!");
+
+            setTimeout(() => {
+                router.push("/");
+            }, 1000);
+        } else {
+            toast.error(data.message || "Failed to save details");
+        }
     };
+
 
     return (
         <div className="min-h-screen flex flex-col lg:overflow-hidden">

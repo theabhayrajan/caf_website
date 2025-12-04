@@ -11,15 +11,37 @@ export async function GET() {
     });
 
     const [rows] = await db.execute(`
-      SELECT q.*, c.class_name 
-      FROM questions q 
-      LEFT JOIN classes c ON q.class_id = c.id 
+      SELECT 
+        q.id,
+        q.video_link,
+        q.total_questions,
+        q.class_test_id,
+        ct.class_id,
+        c.class_name,
+        ct.test_code
+      FROM questions q
+      LEFT JOIN class_tests ct ON q.class_test_id = ct.id
+      LEFT JOIN classes c ON ct.class_id = c.id
       ORDER BY q.id DESC
     `);
 
-    return NextResponse.json(rows);
+    // ⭐ FRONTEND EXPECTS `tests:` key
+    return NextResponse.json({
+      tests: rows.map(r => ({
+        id: r.id,
+        class_id: r.class_id,
+        test_code: r.test_code,
+        video_link: r.video_link,
+        questions_count: r.total_questions,
+        class_name: r.class_name
+      }))
+    });
+
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "Failed to load tests" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to load tests" },
+      { status: 500 }
+    );
   }
 }
