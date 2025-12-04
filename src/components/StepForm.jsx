@@ -1,60 +1,61 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
-export default function StepForm({ onSubmit, onCancel, initialData, selectedClass, testCode }) {
-  const [videoLink, setVideoLink] = useState('');
-  const [questionCount, setQuestionCount] = useState('');
+export default function StepForm({
+  onSubmit,
+  onCancel,
+  initialData,
+  selectedClass,
+  testCode,
+}) {
+  const router = useRouter();
+  const [videoLink, setVideoLink] = useState("");
+  const [questionCount, setQuestionCount] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
   const [questions, setQuestions] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
+  const [classes, setClasses] = useState([]);
   const stepRefs = useRef([]);
   const scrollContainerRef = useRef(null);
 
-  // Initialize form with existing data when editing
+
   useEffect(() => {
-    if (initialData) {
-      setVideoLink(initialData.videoLink || '');
-      setQuestionCount(initialData.questions.length.toString());
-
-      const mappedQuestions = initialData.questions.map(q => ({
-        title: q.title || '',
-        options: q.options || ['', '', '', ''],
-        correctAnswer: q.correctAnswer || 0,
-        image: q.image || null,
-        imagePreview: q.imagePreview || null
-      }));
-
-      setQuestions(mappedQuestions);
-      setIsEditMode(true);
-      setCurrentStep(1);
+    async function fetchClasses() {
+      const res = await fetch("/api/classes");
+      const data = await res.json();
+      setClasses(data);
     }
+    fetchClasses();
+  }, []);
+
+
+  useEffect(() => {
+    if (!initialData) return;
+
+    setVideoLink(initialData.videoLink || "");
+    setQuestionCount(initialData.questions.length.toString());
+
+    setQuestions(
+      initialData.questions.map((q) => ({
+        id: q.id,
+        title: q.title || "",
+        options: q.options,
+        correctAnswer: Number(q.correctAnswer),
+        image: null,
+        imagePreview: q.image_url,
+        image_url: q.image_url,
+      }))
+    );
+
+    setIsEditMode(true);
+    setCurrentStep(1);
   }, [initialData]);
 
-  // Scroll to current step
-  useEffect(() => {
-    if (currentStep > 0 && questions.length > 0 && stepRefs.current[currentStep - 1] && scrollContainerRef.current) {
-      setTimeout(() => {
-        const stepElement = stepRefs.current[currentStep - 1];
-        const container = scrollContainerRef.current;
 
-        if (stepElement && container) {
-          const containerWidth = container.offsetWidth;
-          const stepLeft = stepElement.offsetLeft;
-          const stepWidth = stepElement.offsetWidth;
-          const scrollPosition = stepLeft - (containerWidth / 2) + (stepWidth / 2);
-
-          container.scrollTo({
-            left: scrollPosition,
-            behavior: 'smooth'
-          });
-        }
-      }, 100);
-    }
-  }, [currentStep]);
-
-  // Handle dynamic question count changes while preserving existing data
+  // Handle question count
   const handleQuestionCountChange = (newCount) => {
     const count = parseInt(newCount);
 
@@ -63,11 +64,13 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
 
       if (count > currentCount) {
         const newQuestions = Array.from({ length: count - currentCount }, () => ({
-          title: '',
-          options: ['', '', '', ''],
+          id: crypto.randomUUID(),
+          title: "",
+          options: ["", "", "", ""],
           correctAnswer: 0,
           image: null,
-          imagePreview: null
+          imagePreview: null,
+          image_url: "", 
         }));
         setQuestions([...questions, ...newQuestions]);
       } else if (count < currentCount) {
@@ -82,7 +85,6 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
     }
   };
 
-  // Watch for question count input changes
   useEffect(() => {
     if (questionCount && !isNaN(parseInt(questionCount))) {
       handleQuestionCountChange(questionCount);
@@ -91,7 +93,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
 
   const handleQuestionCountInput = (e) => {
     const value = e.target.value;
-    if (value === '' || /^\d+$/.test(value)) {
+    if (value === "" || /^\d+$/.test(value)) {
       setQuestionCount(value);
     }
   };
@@ -102,7 +104,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
     const updated = [...questions];
     updated[currentStep - 1] = {
       ...updated[currentStep - 1],
-      [field]: value
+      [field]: value,
     };
     setQuestions(updated);
 
@@ -130,7 +132,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
-    if (file && file.type.startsWith('image/')) {
+    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
 
       reader.onload = (event) => {
@@ -138,7 +140,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
         updated[currentStep - 1] = {
           ...updated[currentStep - 1],
           image: file,
-          imagePreview: event.target.result
+          imagePreview: event.target.result,
         };
         setQuestions(updated);
       };
@@ -152,7 +154,7 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
     updated[currentStep - 1] = {
       ...updated[currentStep - 1],
       image: null,
-      imagePreview: null
+      imagePreview: null,
     };
     setQuestions(updated);
   };
@@ -164,12 +166,14 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
     const errors = {};
 
     if (!current.title.trim()) {
-      errors.title = 'Question title is required';
+      errors.title = "Question title is required";
     }
 
     current.options.forEach((option, index) => {
       if (!option.trim()) {
-        errors[`option-${index}`] = `Option ${String.fromCharCode(65 + index)} is required`;
+        errors[`option-${index}`] = `Option ${String.fromCharCode(
+          65 + index
+        )} is required`;
       }
     });
 
@@ -192,21 +196,43 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
     }
   };
 
-  const handleSubmit = () => {
-    if (!videoLink || !questionCount || questions.length === 0) {
-      return;
+  const handleSubmit = async () => {
+    if (!videoLink || !questionCount || questions.length === 0) return;
+    if (!validateCurrentQuestion()) return;
+
+    const updatedQuestions = [...questions];
+
+    // STEP 1: Upload images first
+    for (let i = 0; i < updatedQuestions.length; i++) {
+      const q = updatedQuestions[i];
+
+      if (q.image instanceof File) {
+        const uploadForm = new FormData();
+        uploadForm.append("file", q.image);
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: uploadForm,
+        });
+
+        const data = await res.json();
+        q.image_url = data.url; // Save uploaded URL
+      }
+
+      delete q.image; // Remove file object
+      delete q.imagePreview;
     }
 
-    if (validateCurrentQuestion()) {
-      const formData = {
-        videoLink,
-        questions
-      };
-
-      onSubmit(formData);
-    }
+    // STEP 2: Send modified questions to parent
+    onSubmit({
+      videoLink,
+      questions: updatedQuestions,
+    });
   };
 
+
+
+  // Calculate steps
   const getVisibleSteps = () => {
     const totalSteps = questions.length;
     const maxVisible = 7;
@@ -226,27 +252,25 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
 
     if (start > 1) {
       steps.push(1);
-      if (start > 2) steps.push('...');
+      if (start > 2) steps.push("...");
     }
 
-    for (let i = start; i <= end; i++) {
-      steps.push(i);
-    }
+    for (let i = start; i <= end; i++) steps.push(i);
 
     if (end < totalSteps) {
-      if (end < totalSteps - 1) steps.push('...');
+      if (end < totalSteps - 1) steps.push("...");
       steps.push(totalSteps);
     }
 
     return steps;
   };
 
-  const currentQuestion = questions[currentStep - 1] || {
-    title: '',
-    options: ['', '', '', ''],
+  const currentQuestion = questions[currentStep - 1] ?? {
+    title: "",
+    options: ["", "", "", ""],
     correctAnswer: 0,
     image: null,
-    imagePreview: null
+    imagePreview: null,
   };
   const totalSteps = questions.length;
   const visibleSteps = getVisibleSteps();
@@ -345,8 +369,8 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
                           setCurrentStep(step);
                         }}
                         className={`min-w-[44px] h-11 rounded-full flex items-center justify-center font-semibold transition-all px-3 ${step < currentStep ? 'bg-emerald-500 text-white shadow-md' :
-                            step === currentStep ? 'bg-white text-[#3690e5] ring-4 ring-white/30 scale-110 shadow-lg' :
-                              'bg-[#eaeaea] text-[#3690e5] hover:bg-white'
+                          step === currentStep ? 'bg-white text-[#3690e5] ring-4 ring-white/30 scale-110 shadow-lg' :
+                            'bg-[#eaeaea] text-[#3690e5] hover:bg-white'
                           }`}
                       >
                         {step}
@@ -432,9 +456,9 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
                         <div className="flex items-center justify-center w-12">
                           <input
                             type="radio"
-                            name={`correct-answer-${currentStep}`}
-                            checked={currentQuestion.correctAnswer === index}
-                            onChange={() => handleQuestionChange('correctAnswer', index)}
+                            name={`correct-answer-${currentQuestion.id}`}
+                            checked={Number(currentQuestion.correctAnswer) === index}
+                            onChange={() => handleQuestionChange("correctAnswer", index)}
                             className="w-6 h-6 text-emerald-500 focus:ring-emerald-500 cursor-pointer"
                           />
                         </div>
@@ -485,11 +509,11 @@ export default function StepForm({ onSubmit, onCancel, initialData, selectedClas
                   {currentQuestion.imagePreview ? (
                     <>
                       <img
-                        src={currentQuestion.imagePreview}
+                        src={currentQuestion.imagePreview || currentQuestion.image_url}
                         alt="Question preview"
                         className="absolute inset-0 w-full h-full object-contain"
-                        style={{ objectFit: 'contain' }}
                       />
+
                       <button
                         onClick={handleRemoveImage}
                         className="absolute top-3 right-3 z-10 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg"

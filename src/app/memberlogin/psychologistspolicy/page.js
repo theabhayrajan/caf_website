@@ -1,14 +1,14 @@
-'use client'; // Add this if using Next.js 13+ App Router
+'use client'; 
 import React from 'react'
 import Header from '@/components/Header'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation' // or 'next/router' for Pages Router
+import { useRouter } from 'next/navigation' 
 
 export default function Page() {
     const router = useRouter();
 
     const handleNavigation = () => {
-        router.push('/articles'); // Replace with your actual route
+        router.push('/articles'); 
     };
 
     return (
@@ -20,8 +20,7 @@ export default function Page() {
                     How can you help being a member?
                 </h1>
                 <p className='text-[1.1rem] lg:text-[1.2rem] 2xl:text-[1.3rem]'>
-                    Participate in knowledge sharing (publish articles, write blogs) <br />
-                    Suggest the admins for enhancement of the forum values.
+ 
                 </p>
             </div>
             

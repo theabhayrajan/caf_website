@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import SuperAdminHeader from '@/components/SuperAdminHeader';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import SuperAdminHeader from "@/components/SuperAdminHeader";
 
 export default function AdminLogin() {
 
@@ -13,7 +13,7 @@ export default function AdminLogin() {
     password: ''
   });
 
-  // Prevent body scroll only on large screens (lg breakpoint = 1024px)
+  // Prevent body scroll only on large screens
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -25,7 +25,7 @@ export default function AdminLogin() {
       }
     };
 
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -38,30 +38,41 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 🔴 BACKEND API CALL - Login API
-    // const response = await fetch('/api/admin/login', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formData)
-    // });
-    // const data = await response.json();
-    // if (data.success) {
-    //   localStorage.setItem('adminToken', data.token);
-    //   router.push('/admin/dashboard');
-    // }
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-    // Temporary: Direct redirect for frontend testing
-    router.push('/admin/edit-homepage');
+    const data = await res.json();
+
+    if (res.status === 200 && data.token) {
+
+      // Save token
+      localStorage.setItem("caf_admin_token", data.token);
+
+      // IMPORTANT: CLEAR previous dashboard data
+      localStorage.removeItem("selectedClass");
+      localStorage.removeItem("testCode");
+
+      // Hide question sets until first submission
+      localStorage.setItem("hasSubmitted", "false");
+
+      // Redirect
+      router.push("/admin/edit-homepage");
+    } else {
+      alert(data.error || "Invalid credentials");
+    }
   };
 
   return (
-
     <>
       <SuperAdminHeader />
       <div className="min-h-screen flex flex-col lg:overflow-hidden">
 
         <div className="flex-1 flex items-start lg:mt-15 justify-center px-4 overflow-y-auto lg:overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
+
             {/* Image for small screens */}
             <div className="flex lg:hidden items-center justify-center mt-0">
               <Image
@@ -86,7 +97,7 @@ export default function AdminLogin() {
               </div>
 
               <form onSubmit={handleSubmit}>
-                {/* Email Address */}
+                {/* Email */}
                 <div className="flex flex-col gap-2 mb-10">
                   <label className="block text-[1.05rem] 2xl:text-[1.15rem] font-medium text-black">
                     Email Address
@@ -96,7 +107,6 @@ export default function AdminLogin() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-[100%] lg:w-[80%] border border-gray-300 p-3 py-4 bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
-                    // placeholder="admin@example.com"
                     required
                   />
                 </div>
@@ -111,12 +121,11 @@ export default function AdminLogin() {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     className="w-[100%] lg:w-[80%] border border-gray-300 p-3 py-4 bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
-                    // placeholder="12345"
                     required
                   />
                 </div>
 
-                {/* Submit Button */}
+                {/* Submit */}
                 <button
                   type="submit"
                   className="w-[100%] lg:w-[80%] py-4 bg-[#6ebdfc] hover:bg-sky-400 text-white text-[1.2rem] transition"
@@ -126,7 +135,7 @@ export default function AdminLogin() {
               </form>
             </div>
 
-            {/* Right Section - Image */}
+            {/* Right Image */}
             <div className="hidden lg:flex lg:self-end items-center justify-center mt-20">
               <Image
                 src="/superadmin-image.png"
