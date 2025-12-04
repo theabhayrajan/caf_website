@@ -51,7 +51,7 @@ export default function AdminLogin() {
     // }
 
     // Temporary: Direct redirect for frontend testing
-    router.push('/admin/dashboard');
+    router.push('/admin/edit-homepage');
   };
 
   return (

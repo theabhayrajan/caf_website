@@ -33,9 +33,10 @@ export default function Header() {
         // { name: "Evaluation", href: "/evaluation" },
         // { name: "Programs & resources", href: "/videoLearningPage" },
         // { name: "Articles & Discussions", href: "/articles" },
+        { name: "Edit Homepage", href: "/admin/edit-homepage" },
         { name: "Create Test", href: "/admin/dashboard" },
         { name: "View All Test", href: "/admin/view-all-tests" },
-    ];
+    ]; 
 
     return (
         <>
@@ -44,7 +45,7 @@ export default function Header() {
 
             <header
                 ref={headerRef}
-                className={`w-full z-50 top-0 transition-all duration-300 ${isSticky ? "fixed bg-white/95 backdrop-blur-xs" : "relative"
+                className={`w-full z-50 top-0 transition-all shadow-lg duration-300 ${isSticky ? "fixed bg-white/95 backdrop-blur-xs" : "relative"
                     }`}
             >
                 {/* --- Top Black Bar --- */}
@@ -96,7 +97,7 @@ export default function Header() {
                 >
                     <div className="flex items-center justify-between px-4 md:px-6 md:h-14 max-w-7xl mx-auto 2xl:max-w-none 2xl:mx-0 2xl:px-20">
                         {/* Back Button - Only visible on nested routes */}
-                        {showBackButton && (
+                        {/* {showBackButton && (
                             <button
                                 onClick={() => router.back()}
                                 className="flex items-center py-2 gap-1 text-[#2E98DA] hover:text-[#1a7ab8] transition-colors duration-200 font-medium text-base mr-4"
@@ -105,7 +106,7 @@ export default function Header() {
                                 <ChevronLeft className="w-5 h-5" />
                                 <span>Back</span>
                             </button>
-                        )}
+                        )} */}
 
                         {/* Left-aligned Nav Links */}
                         <nav className="hidden md:flex items-center gap-10 text-sm sm:text-lg md:text-sm lg:text-base xl:text-lg font-semibold text-gray-800 h-full justify-center w-full lg:ml-30 [@media(min-width:1180px)_and_(max-width:1278px)]:ml-35 [@media(min-width:1280px)_and_(max-width:1350px)]:ml-50 [@media(min-width:1351px)_and_(max-width:1490px)]:ml-35 [@media(min-width:1490px)_and_(max-width:1535px)]:ml-20  2xl:ml-22">
@@ -132,7 +133,7 @@ export default function Header() {
                         </nav>
 
                         {/* Right-side options (desktop only) */}
-                        <div className="hidden md:flex items-center gap-6 text-sm md:text-[0.9rem] lg:text-base mb-1 text-[#2E98DA]">
+                        {/* <div className="hidden md:flex items-center gap-6 text-sm md:text-[0.9rem] lg:text-base mb-1 text-[#2E98DA]">
                             <Link
                                 href="/memberlogin"
                                 className="hover:text-[#2E98DA] transition-colors duration-200 whitespace-nowrap"
@@ -143,7 +144,7 @@ export default function Header() {
                                 <Globe className="w-4 h-4" />
                                 <span>English</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* --- Mobile Menu --- */}
@@ -172,7 +173,7 @@ export default function Header() {
                                 })}
                             </nav>
 
-                            <div className="flex flex-col gap-3">
+                            {/* <div className="flex flex-col gap-3">
                                 <Link
                                     href="/memberlogin"
                                     onClick={() => setMobileOpen(false)}
@@ -187,7 +188,7 @@ export default function Header() {
                                     <Globe className="w-4 h-4" />
                                     <span>English</span>
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

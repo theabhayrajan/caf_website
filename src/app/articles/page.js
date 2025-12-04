@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getArticles, saveArticles } from "@/utils/articles-storage";
-import ClientOnlyCKEditor from "@/components/ClientOnlyCKEditor";
+import ClientOnlyCKEditor from "@/components/ArticleClientOnlyCKEditor";
 import Header from "@/components/Header";
 import { CiEdit } from "react-icons/ci";
 
