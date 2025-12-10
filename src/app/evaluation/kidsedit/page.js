@@ -186,7 +186,7 @@ export default function KidsDetailsPage() {
                                     : "border-gray-300"
                                     } bg-white shadow-sm flex items-center justify-center text-lg font-semibold text-gray-800 hover:shadow-lg`}
                             >
-                                {kid.full_name}
+                                 {kid.full_name}
                             </button>
                         ))}
 
