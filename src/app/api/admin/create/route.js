@@ -4,11 +4,12 @@ import mysql from "mysql2/promise";
 
 // DB Connection
 const db = await mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "caf_system",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 });
+
 
 export async function GET() {
   return NextResponse.json({

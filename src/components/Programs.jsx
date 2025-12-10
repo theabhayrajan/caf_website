@@ -34,8 +34,8 @@ export default function SchoolProgramCard({ data, editing, onFieldChange }) {
     return {
       headline: data?.program_card_title || fallbackHeadline,
       paragraph: data?.program_card_paragraph || fallbackParagraph,
-      leftImage: data?.program_card_image_url || "/cafAssessment.svg",
-      smallImage: data?.program_card_image_url || "/programs.png",
+      leftImage: data?.program_card_image_url || `${process.env.NEXT_PUBLIC_PROD_URL}/cafAssessment.svg`,
+      smallImage: data?.program_card_image_url || `${process.env.NEXT_PUBLIC_PROD_URL}/programs.png`,
     };
   }, [data]);
 
@@ -72,7 +72,7 @@ export default function SchoolProgramCard({ data, editing, onFieldChange }) {
     formData.append("image", file);
 
     try {
-      const res = await fetch("/api/homeupload", { 
+      const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/homeupload`, { 
         method: "POST", 
         body: formData 
       });

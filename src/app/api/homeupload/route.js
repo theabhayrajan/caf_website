@@ -3,7 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs/promises';
 
-const uploadDir = './public/uploads';
+const uploadDir = `${process.env.NEXT_PUBLIC_PROD_URL}public/uploads`;
 
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
@@ -52,7 +52,7 @@ export async function POST(request) {
 
     return NextResponse.json({ 
       success: true, 
-      url: `/uploads/${filename}` 
+      url: `${process.env.NEXT_PUBLIC_PROD_URL}/uploads/${filename}` 
     });
   } catch (error) {
     console.error('Upload error:', error);

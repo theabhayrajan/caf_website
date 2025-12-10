@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 
 export async function POST(req) {
   try {
-    const form = await req.formData(); // ✅ FIX
+    const form = await req.formData();
 
     const id = form.get("id");
     const class_id = form.get("class_id");
@@ -13,10 +13,10 @@ export async function POST(req) {
     }
 
     const db = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "caf_system",
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
     });
 
     // Check if test already exists

@@ -24,20 +24,20 @@ export default function Home() {
         {
             title: "Socio-psychological values",
             subtitle: "Training attended by 1000+ students.",
-            url: "    ",
-            thumb: "/videoThum1.png",
+            url: " https://www.w3schools.com/html/movie.mp4  ",
+            thumb: `${process.env.NEXT_PUBLIC_PROD_URL}/videoThum1.png`,
         },
         {
             title: "Parents : Socio-psychological values",
             subtitle: "Training attended by 1000+ students.",
             url: "https://www.w3schools.com/html/movie.mp4",
-            thumb: "/videoThum2.png",
+            thumb: `${process.env.NEXT_PUBLIC_PROD_URL}/videoThum2.png`,
         },
         {
             title: "Teachers : Socio-psychological values",
             subtitle: "Training attended by 1000+ students.",
             url: "https://www.w3schools.com/html/mov_bbb.mp4",
-            thumb: "/videoThum3.png",
+            thumb: `${process.env.NEXT_PUBLIC_PROD_URL}/videoThum3.png`,
         },
     ];
 
@@ -170,7 +170,7 @@ export default function Home() {
                                         </p>
                                     </div>
                                     <img
-                                        src="/videosectionlogo.svg"
+                                        src="/caf/videosectionlogo.svg"
                                         alt="badge"
                                         className="w-8 h-8 ml-2 flex-shrink-0"
                                     />
@@ -285,7 +285,7 @@ export default function Home() {
 
                                         <div className="flex items-center space-x-2 text-gray-600 text-sm sm:text-base md:text-lg gap-2">
                                             <img
-                                                src="/feedbacklogo.svg"
+                                                src={`${process.env.NEXT_PUBLIC_PROD_URL}/feedbacklogo.svg`}
                                                 alt="feedback"
                                                 className="w-7 h-7"
                                             />

@@ -17,7 +17,7 @@ export default function FooterSection({ data, editing, onFieldChange, onImageCha
       quote: data?.footer_quote || "In order to develop—intellectually, emotionally, socially—a child requires participation in progressively more complex activities, typically with one or more adults who have an irrational emotional attachment to the child.",
       authorName: data?.footer_author || "-Urie Bronfenbrenner (1917–2005)",
       authorInfo: data?.footer_author_info || "Developmental Psychologist, Researcher, and Professor<br/>(Cornell University)",
-      image: data?.footer_image_url || "/footer.svg",
+      image: data?.footer_image_url || `${process.env.NEXT_PUBLIC_PROD_URL}/footer.svg`,
       copyright: data?.footer_copyright || "@2025 CognitiveAllianceForumz",
       aboutText: data?.footer_about_text || "About",
       aboutLink: data?.footer_about_link || "#",
@@ -50,7 +50,7 @@ export default function FooterSection({ data, editing, onFieldChange, onImageCha
     formData.append("image", file);
 
     try {
-      const res = await fetch("/api/homeupload", { method: "POST", body: formData });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/homeupload`, { method: "POST", body: formData });
       const result = await res.json();
 
       if (result.url) {

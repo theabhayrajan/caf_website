@@ -9,10 +9,10 @@ export async function DELETE(req) {
     }
 
     const db = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "caf_system",
+    host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
     });
 
     // 1️⃣ FIRST: Get all question IDs from questions table linked with class_test_id

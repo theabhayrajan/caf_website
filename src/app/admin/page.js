@@ -38,7 +38,7 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("/api/admin/login", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/admin/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
@@ -59,7 +59,7 @@ export default function AdminLogin() {
       localStorage.setItem("hasSubmitted", "false");
 
       // Redirect
-      router.push("/admin/edit-homepage");
+      router.push(`/admin/edit-homepage`);
     } else {
       alert(data.error || "Invalid credentials");
     }
@@ -76,7 +76,7 @@ export default function AdminLogin() {
             {/* Image for small screens */}
             <div className="flex lg:hidden items-center justify-center mt-0">
               <Image
-                src="/superadmin-image.png"
+                src={`${process.env.NEXT_PUBLIC_PROD_URL}/superadmin-image.png`}
                 alt="Illustration"
                 width={360}
                 height={300}
@@ -138,7 +138,7 @@ export default function AdminLogin() {
             {/* Right Image */}
             <div className="hidden lg:flex lg:self-end items-center justify-center mt-20">
               <Image
-                src="/superadmin-image.png"
+                src={`${process.env.NEXT_PUBLIC_PROD_URL}/superadmin-image.png`}
                 alt="Illustration"
                 width={540}
                 height={420}

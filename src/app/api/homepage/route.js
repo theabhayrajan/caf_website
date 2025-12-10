@@ -3,31 +3,31 @@ import { NextResponse } from 'next/server';
 
 // Database config - UPDATE THESE VALUES
 const pool = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "caf_system", // YOUR DATABASE NAME YAHAN DAALO
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
 });
 
 export async function GET() {
     try {
-        console.log("🔍 Fetching homepage data...");
+        // console.log("Fetching homepage data...");
         const [rows] = await pool.execute(
             "SELECT * FROM home_page_content WHERE component_name = 'HomePage'"
         );
 
-        console.log("📊 Found rows:", rows.length);
+        // console.log(" Found rows:", rows.length);
         if (rows.length === 0) {
-            console.log("❌ No data found, returning empty");
+            console.log(" No data found, returning empty");
             return NextResponse.json({ data: null });
         }
 
-        console.log("✅ Returning data:", rows[0]);
+        // console.log("Returning data:", rows[0]);
         return NextResponse.json({ data: rows[0] });
     } catch (error) {
-        console.error('❌ Database GET error:', error);
+        console.error(' Database GET error:', error);
         return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
     }
 }
@@ -36,9 +36,9 @@ export async function POST(request) {
     const connection = await pool.getConnection();
 
     try {
-        console.log("💾 Saving homepage data...");
+        // console.log("Saving homepage data...");
         const body = await request.json();
-        console.log("📝 Received body keys:", Object.keys(body));
+        // console.log(" Received body keys:", Object.keys(body));
 
         // UPDATE QUERY - EXACT TABLE STRUCTURE
         const query = `
@@ -96,20 +96,20 @@ export async function POST(request) {
             body.footer_contact_link || DEFAULT,
         ];
 
-        console.log("🔄 Executing UPDATE with values...");
+        // console.log("Executing UPDATE with values...");
         const [result] = await connection.execute(query, values);
-        console.log("✅ Update result:", result);
+        // console.log("Update result:", result);
 
         if (result.affectedRows === 0) {
-            console.log("⚠️ No rows updated - data might not exist");
+            console.log("No rows updated - data might not exist");
             return NextResponse.json({ error: 'No homepage data found to update' }, { status: 404 });
         }
 
-        console.log("🎉 Homepage updated successfully!");
+        console.log("Homepage updated successfully!");
         return NextResponse.json({ success: true, message: 'Homepage updated successfully' });
 
     } catch (error) {
-        console.error('❌ Database POST error:', error);
+        console.error(' Database POST error:', error);
         return NextResponse.json({
             error: 'Failed to update: ' + error.message
         }, { status: 500 });

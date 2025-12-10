@@ -13,7 +13,7 @@ export default function OTPLoginStatic() {
     const [errors, setErrors] = useState({});
     const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
-    // Prevent body scroll only on large screens (lg breakpoint = 1024px)
+    // Disable scroll on large screens
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1024) {
@@ -25,9 +25,9 @@ export default function OTPLoginStatic() {
             }
         };
 
-        handleResize(); // Initial check
+        handleResize();
         window.addEventListener("resize", handleResize);
-        
+
         return () => {
             window.removeEventListener("resize", handleResize);
             document.body.style.overflow = "auto";
@@ -42,6 +42,7 @@ export default function OTPLoginStatic() {
 
     const handleOtpChange = (index, value) => {
         if (!/^[0-9]?$/.test(value)) return;
+
         const newOtp = [...otp];
         newOtp[index] = value;
         setOtp(newOtp);
@@ -57,25 +58,74 @@ export default function OTPLoginStatic() {
 
     const validateForm = () => {
         let formErrors = {};
+
         if (phone.length !== 10) {
             formErrors.phone = "Please enter a valid 10-digit phone number.";
         }
         if (otp.join("").length !== 4) {
             formErrors.otp = "Please enter all 4 OTP digits.";
         }
+
         setErrors(formErrors);
-        return Object.keys(formErrors).length === 0;
+        return Object.values(formErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    // ⭐ SEND OTP FOR KIDS
+    const sendOTP = async () => {
+        if (phone.length !== 10) {
+            setErrors({ phone: "Enter valid 10-digit number" });
+            return;
+        }
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/auth/send-otp`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone, role_id: 3 })
+        });
+
+        const data = await res.json();
+
+        // ⭐ Styled OTP Console Log
+        console.log(
+            "KIDS OTP: " + data.otp,
+        );
+
+        if (data.success) {
+            toast.success("OTP generated! Check console.");
+        } else {
+            toast.error(data.message || "Failed to send OTP");
+        }
+    };
+
+    // ⭐ VERIFY OTP
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
 
-        toast.success("OTP Verified Successfully!");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/auth/verify-otp`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                phone,
+                otp: otp.join(""),
 
-        setTimeout(() => {
-            router.push("/evaluation/kidsdetails");
-        }, 1500);
+            })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            toast.success("OTP Verified Successfully!");
+
+            if (data.hasDetails) {
+                router.push(`/evaluation/kidsedit?userId=${data.userId}`); // Kids already filled details
+            } else {
+                router.push(`/evaluation/kidsdetails?userId=${data.userId}`);
+            }
+
+        } else {
+            toast.error(data.message || "Invalid OTP");
+        }
     };
 
     return (
@@ -83,9 +133,10 @@ export default function OTPLoginStatic() {
             <Header />
             <div className="flex-1 flex items-start lg:mt-20 justify-center px-4 overflow-y-auto lg:overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
+
                     <div className="flex lg:hidden items-center justify-center mt-5">
                         <Image
-                            src="/kidsotp.png"
+                            src={`${process.env.NEXT_PUBLIC_PROD_URL}/kidsotp.png`}
                             alt="Illustration"
                             width={360}
                             height={300}
@@ -101,9 +152,9 @@ export default function OTPLoginStatic() {
                         </h1>
 
                         <form onSubmit={handleSubmit}>
-                            {/* Phone Number Field */}
+                            {/* Phone Field */}
                             <div className="flex flex-col gap-2 mb-10">
-                                <label className="block text-[1.05rem] font-medium text-black">
+                                <label className="text-[1.05rem] font-medium text-black">
                                     Phone Number (for OTP)
                                 </label>
                                 {errors.phone && (
@@ -119,13 +170,7 @@ export default function OTPLoginStatic() {
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => {
-                                            if (phone.length === 10) {
-                                                toast.success("OTP sent to your phone number!");
-                                            } else {
-                                                setErrors({ phone: "Enter a valid 10-digit number first." });
-                                            }
-                                        }}
+                                        onClick={sendOTP}
                                         className="bg-[#6ebdfc] hover:bg-sky-400 text-white p-4 transition"
                                     >
                                         <FaArrowRight size={25} />
@@ -134,7 +179,7 @@ export default function OTPLoginStatic() {
                             </div>
 
                             {/* OTP Fields */}
-                            <label className="block text-[1.05rem] font-medium text-black mb-2">
+                            <label className="text-[1.05rem] font-medium text-black mb-2">
                                 OTP
                             </label>
                             {errors.otp && (
@@ -157,10 +202,10 @@ export default function OTPLoginStatic() {
                             </div>
 
                             <p className="text-[12px] text-black mb-5">
-                                Enter the OTP received via SMS
+                                Enter the OTP shown in console
                             </p>
 
-                            {/* Submit Button */}
+                            {/* Submit */}
                             <button
                                 type="submit"
                                 className="w-[80%] py-4 bg-[#6ebdfc] hover:bg-sky-400 text-white text-[1.2rem] transition"
@@ -170,10 +215,9 @@ export default function OTPLoginStatic() {
                         </form>
                     </div>
 
-                    {/* Right Section - Image */}
                     <div className="hidden lg:flex lg:self-end lg:translate-y-25 items-center justify-center">
                         <Image
-                            src="/kidsotp.png"
+                            src={`${process.env.NEXT_PUBLIC_PROD_URL}/kidsotp.png`}
                             alt="Illustration"
                             width={360}
                             height={420}
@@ -181,6 +225,7 @@ export default function OTPLoginStatic() {
                             priority
                         />
                     </div>
+
                 </div>
             </div>
         </div>

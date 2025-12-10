@@ -75,7 +75,7 @@ export default function ChildDevelopmentSection({
       }
     }
 
-    const mainImage = data?.child_dev_main_image || "/journey.svg";
+    const mainImage = data?.child_dev_main_image || `${process.env.NEXT_PUBLIC_PROD_URL}/journey.svg`;
 
     return {
       mainTitle,
@@ -254,7 +254,7 @@ export default function ChildDevelopmentSection({
         <div className="lg:grid lg:grid-cols-[auto_1fr] lg:gap-8 2xl:w-[70vw] mx-auto">
           <div className="hidden lg:flex lg:items-center lg:justify-center">
             <Image
-              src={localData.mainImage || "/journey.svg"}
+              src={localData.mainImage || `${process.env.NEXT_PUBLIC_PROD_URL}/journey.svg`}
               alt="Child Development"
               width={300}
               height={600}
@@ -329,7 +329,7 @@ export default function ChildDevelopmentSection({
       <div className="lg:grid lg:grid-cols-[auto_1fr] lg:gap-8 2xl:w-[70vw] mx-auto">
         <div className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center space-y-3">
           <Image
-            src={localData.mainImage || "/journey.svg"}
+            src={localData.mainImage || "/caf/journey.svg"}
             alt="Child Development"
             width={300}
             height={600}

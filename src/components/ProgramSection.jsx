@@ -16,17 +16,17 @@ export default function ProgramsSection({ data, editing, onFieldChange, onJsonCh
     {
       title: "Assessments",
       description: "Free Assessments on Social, Psychological and environmental conduct.",
-      image: "/assessment3.svg",
+      image: `${process.env.NEXT_PUBLIC_PROD_URL}/assessment3.svg`,
     },
     {
       title: "Trainings",
       description: "Free Trainings for kids to improve their social and environmental conduct.",
-      image: "/assessment1.svg",
+      image: `${process.env.NEXT_PUBLIC_PROD_URL}/assessment1.svg`,
     },
     {
       title: "Kids Artifacts",
       description: "Free Artifacts such as animated videos, Worksheets and PPTs designed for different grades.",
-      image: "/assessment2.svg",
+      image: `${process.env.NEXT_PUBLIC_PROD_URL}/assessment2.svg`,
     },
   ];
 
@@ -118,7 +118,7 @@ export default function ProgramsSection({ data, editing, onFieldChange, onJsonCh
     formData.append("image", file);
 
     try {
-      const res = await fetch("/api/homeupload", { method: "POST", body: formData });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/homeupload`, { method: "POST", body: formData });
       const result = await res.json();
 
       if (result.url) {
@@ -228,7 +228,7 @@ export default function ProgramsSection({ data, editing, onFieldChange, onJsonCh
               <div className="w-[220px] h-[380px] flex justify-center items-center">
                 <div className="w-full h-full relative overflow-hidden rounded-lg">
                   <Image 
-                    src={program.image || "/placeholder.svg"} 
+                    src={program.image || `${process.env.NEXT_PUBLIC_PROD_URL}/placeholder.svg`} 
                     alt={program.title} 
                     fill 
                     className="object-contain" 
@@ -317,7 +317,7 @@ export default function ProgramsSection({ data, editing, onFieldChange, onJsonCh
             <div className="w-[220px] h-[380px] relative group">
               <div className="w-full h-full relative overflow-hidden rounded-lg">
                 <Image 
-                  src={program.image || "/placeholder.svg"} 
+                  src={program.image || `${process.env.NEXT_PUBLIC_PROD_URL}/placeholder.svg`} 
                   alt="Program image" 
                   fill 
                   className="object-contain" 

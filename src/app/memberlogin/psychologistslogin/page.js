@@ -60,50 +60,57 @@ export default function OTPLoginStatic() {
         return Object.keys(formErrors).length === 0;
     };
 
-    // DEMO OTP (No Twilio, No SMS)
-    const sendOTP = async () => {
-        if (phone.length !== 10) {
-            setErrors({ phone: "Enter valid phone number" });
-            return;
-        }
-        const res = await fetch("/api/psychologist/send-otp", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phone }),
-        });
-        const data = await res.json();
-        if (data.success) toast.success("Demo OTP generated! Check console.");
-        else toast.error(data.message || "OTP generation failed");
-    };
+    // ⭐ DEMO OTP (Merged user table)
+const sendOTP = async () => {
+    if (phone.length !== 10) {
+        setErrors({ phone: "Enter valid phone number" });
+        return;
+    }
 
-    // VERIFY OTP FROM BACKEND
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/auth/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, role_id: 1 }),
+    });
+
+    const data = await res.json();
+
+    // ⭐ ADD THIS → This prints the OTP in browser console
+    console.log("OTP for psychologist:", data.otp);
+
+    if (data.success) toast.success("Demo OTP generated! Check console.");
+    else toast.error(data.message || "OTP generation failed");
+};
+
+    // ⭐ VERIFY OTP (Merged user table)
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
 
-        const res = await fetch("/api/psychologist/verify-otp", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/auth/verify-otp`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                phone,
-                otp: otp.join(""),
-            }),
+            body: JSON.stringify({ phone, otp: otp.join("") }),
         });
 
         const data = await res.json();
+        
 
-        if (data.success) {
-            toast.success("OTP Verified!");
-            if (data.profileComplete) {
-                router.push("/articles");
-            } else {
-                router.push(`/memberlogin/psychologistsdetails?psychologistId=${data.psychologist.id}`);
-            }
-        } else {
+        if (!data.success) {
             toast.error(data.message || "Invalid OTP");
+            return;
+        }
+
+        toast.success("OTP Verified!");
+
+        // ⭐ User has profile → redirect to articles
+        if (data.hasDetails) {
+            router.push("/articles");
+        } else {
+            // ⭐ First-time user → go to psychologist detail form
+            router.push(`/memberlogin/psychologistsdetails?userId=${data.userId}`);
         }
     };
-
 
     const handleGoogleLogin = () => toast.success("Google login clicked!");
 

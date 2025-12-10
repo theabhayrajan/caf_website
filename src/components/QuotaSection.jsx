@@ -109,7 +109,7 @@ export default function QuoteSection({ data, editing, onFieldChange, onImageChan
              <div className="max-w-content">
                <div className="relative w-80 md:w-100 lg:w-110 xl:w-155 2xl:w-175 h-96 rounded-lg border-2 border-gray-300 overflow-hidden">
                  <Image
-                   src={data?.quote_image_url || "/hero.svg"}
+                   src={data?.quote_image_url ||  `${process.env.NEXT_PUBLIC_PROD_URL}/hero.svg`}
                    alt="Quote image preview"
                    fill
                    className="object-contain"
@@ -126,7 +126,7 @@ export default function QuoteSection({ data, editing, onFieldChange, onImageChan
              </div>
            </>) :
            (<Image
-             src={data?.quote_image_url || "/hero.svg"}
+             src={data?.quote_image_url || `${process.env.NEXT_PUBLIC_PROD_URL}/hero.svg`}
              alt="Urie Bronfenbrenner teaching"
              width={450}
              height={400}

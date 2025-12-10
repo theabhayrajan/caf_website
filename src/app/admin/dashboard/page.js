@@ -15,12 +15,12 @@ const CLASS_OPTIONS = [
 ];
 
 async function fetchAllTests() {
-  const res = await fetch("/api/tests");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/tests`);
   return res.json();
 }
 
 async function fetchTestDetails(id) {
-  const res = await fetch(`/api/tests/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/tests/${id}`);
   return res.json();
 }
 
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
     const hasLocal = localStorage.getItem("caf_admin_token");
 
     if (!hasCookie && !hasLocal) {
-      router.push("/admin/login");
+      router.push(`${process.env.NEXT_PUBLIC_PROD_URL}/admin/dashboard`);
     } else {
       setAuthLoaded(true);
     }
@@ -91,7 +91,7 @@ export default function AdminDashboard() {
 
     setTestCodeError("");
 
-    const res = await fetch("/api/check-testcode", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/check-testcode`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ test_code: testCode }),
@@ -135,12 +135,12 @@ export default function AdminDashboard() {
       form.append("test_id", editingData.id);
       form.append("class_test_id", editingData.class_test_id);
 
-      res = await fetch("/api/tests/update", {
+      res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/tests/update`, {
         method: "POST",
         body: form,
       });
     } else {
-      res = await fetch("/api/create-full-test", {
+      res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/create-full-test`, {
         method: "POST",
         body: form,
       });

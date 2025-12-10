@@ -13,7 +13,7 @@ const SAMPLE_ARTICLES = [
     id: 1,
     title: "Cognitive Development Theory",
     author: "Jean Piaget",
-    image: "/articlePerson.png",
+    image: "/caf/articlePerson.png",
     content: `
       <p>Jean Piaget (1896–1980) was a Swiss psychologist renowned for his groundbreaking work in developmental psychology, particularly in understanding how children's cognitive abilities develop over time. His theory of cognitive development is one of the most influential frameworks in developmental psychology, explaining how children actively construct their understanding of the world through stages of increasingly complex thinking.</p>
       <h3 class="font-semibold text-lg mt-5 mb-2">Key Concepts of Piaget's Theory:</h3>
@@ -330,7 +330,7 @@ export default function ArticlesPage() {
                   style={{ fontSize: "17px" }}
                 >
                   <img
-                    src="/articles.svg"
+                    src={`${process.env.NEXT_PUBLIC_PROD_URL}/articles.svg`}
                     alt="Write"
                     className="w-5.5 h-5.5 sm:w-7 sm:h-7 mr-1 sm:mr-2 lg:mr-5 sm:mb-3 object-contain"
                     style={{ display: "inline-block" }}

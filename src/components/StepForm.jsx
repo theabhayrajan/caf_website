@@ -24,7 +24,7 @@ export default function StepForm({
 
   useEffect(() => {
     async function fetchClasses() {
-      const res = await fetch("/api/classes");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/classes`);
       const data = await res.json();
       setClasses(data);
     }
@@ -132,7 +132,7 @@ export default function StepForm({
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
-    if (file && file.type.startsWith("image/")) {
+    if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
 
       reader.onload = (event) => {
@@ -210,7 +210,7 @@ export default function StepForm({
         const uploadForm = new FormData();
         uploadForm.append("file", q.image);
 
-        const res = await fetch("/api/upload", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/upload`, {
           method: "POST",
           body: uploadForm,
         });
@@ -509,7 +509,7 @@ export default function StepForm({
                   {currentQuestion.imagePreview ? (
                     <>
                       <img
-                        src={currentQuestion.imagePreview || currentQuestion.image_url}
+                       src={currentQuestion.imagePreview ?? currentQuestion.image_url}
                         alt="Question preview"
                         className="absolute inset-0 w-full h-full object-contain"
                       />

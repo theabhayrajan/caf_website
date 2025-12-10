@@ -54,7 +54,7 @@ export default function Header() {
                         {/* Left: Logo + Name */}
                         <div className="flex items-center gap-3">
                             <Image
-                                src="/logo.png"
+                                src={`${process.env.NEXT_PUBLIC_PROD_URL}/logo.png`}
                                 alt="CAF Logo"
                                 width={50}
                                 height={50}

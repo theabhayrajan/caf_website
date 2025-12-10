@@ -14,10 +14,10 @@ export async function POST(req) {
     const questions = JSON.parse(form.get("questions"));
 
     const db = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "caf_system",
+     host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
     });
 
     // UPDATE class_tests

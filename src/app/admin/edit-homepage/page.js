@@ -24,7 +24,7 @@ export default function EditHomepagePage() {
 
     const fetchHomepageData = async () => {
         try {
-            const res = await fetch('/api/homepage');
+            const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/homepage`);
             const result = await res.json();
             setData(result.data);
         } catch (error) {
@@ -51,7 +51,7 @@ export default function EditHomepagePage() {
         formData.append('oldImageUrl', data?.[field] || "");
 
         try {
-            const res = await fetch('/api/homeupload', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/homeupload`, {
                 method: 'POST',
                 body: formData,
             });
@@ -68,7 +68,7 @@ export default function EditHomepagePage() {
     const saveAllChanges = async () => {
         setSaving(true);
         try {
-            const res = await fetch('/api/homepage', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/homepage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),

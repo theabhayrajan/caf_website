@@ -71,13 +71,9 @@ export default function OTPLoginStatic() {
         e.preventDefault();
         if (!validateForm()) return;
 
-        const res = await fetch("/api/principal/verify-otp", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/auth/verify-otp`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                phone,
-                otp: otp.join("")
-            }),
+            body: JSON.stringify({ phone, otp: otp.join("") })
         });
 
         const data = await res.json();
@@ -88,33 +84,36 @@ export default function OTPLoginStatic() {
             if (data.profileComplete) {
                 router.push("/"); // Home page
             } else {
-                router.push(`/evaluation/principaldetails?principalId=${data.principalId}`);
+                router.push(`/evaluation/principaldetails?userId=${data.userId}`);
             }
         } else {
             toast.error(data.message || "Invalid OTP");
         }
     };
 
-    const sendOTP = async () => {
-        if (phone.length !== 10) {
-            setErrors({ phone: "Enter valid 10-digit number" });
-            return;
-        }
+const sendOTP = async () => {
+    if (phone.length !== 10) {
+        setErrors({ phone: "Enter valid 10-digit number" });
+        return;
+    }
 
-        const res = await fetch("/api/principal/send-otp", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phone }),
-        });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PROD_URL}/api/auth/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, role_id:2 })
+    });
 
-        const data = await res.json();
+    const data = await res.json();
 
-        if (data.success) {
-            toast.success("Demo OTP generated! Check console.");
-        } else {
-            toast.error(data.message || "Failed to send OTP");
-        }
-    };
+    // ⭐ Console log OTP clearly in browser
+    console.log("OTP for principal: " + data.otp,);
+
+    if (data.success) {
+        toast.success("Demo OTP generated! Check console.");
+    } else {
+        toast.error(data.message || "Failed to send OTP");
+    }
+};
 
     return (
         <div className="min-h-screen flex flex-col lg:overflow-hidden">
@@ -123,7 +122,7 @@ export default function OTPLoginStatic() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center w-full max-w-9xl py-6 lg:py-0">
                     <div className="flex lg:hidden items-center justify-center mt-5">
                         <Image
-                            src="/principallogin.png"
+                         src={`${process.env.NEXT_PUBLIC_PROD_URL}/principallogin.png`}
                             alt="Illustration"
                             width={360}
                             height={300}
@@ -205,7 +204,7 @@ export default function OTPLoginStatic() {
                     {/* Right Section - Image */}
                     <div className="hidden lg:flex lg:self-end items-center justify-center">
                         <Image
-                            src="/principallogin.png"
+                         src={`${process.env.NEXT_PUBLIC_PROD_URL}/principallogin.png`}
                             alt="Illustration"
                             width={540}
                             height={420}
