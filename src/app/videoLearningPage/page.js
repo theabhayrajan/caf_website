@@ -170,7 +170,7 @@ export default function Home() {
                                         </p>
                                     </div>
                                     <img
-                                        src="/caf/videosectionlogo.svg"
+                                        src={`${process.env.NEXT_PUBLIC_PROD_URL}/videosectionlogo.svg`}
                                         alt="badge"
                                         className="w-8 h-8 ml-2 flex-shrink-0"
                                     />
